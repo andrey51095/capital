@@ -1,0 +1,25 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module",
+        "allowImportExportEverywhere": true,
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true
+    },
+    "extends":[
+        "plugin:jsx-a11y/recommended"
+    ],
+    "plugins":[
+        "jsx-a11y"
+    ],
+    "rules": {
+        "jsx-a11y/alt-text":"warn"
+    }
+}
