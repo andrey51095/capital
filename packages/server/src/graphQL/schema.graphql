@@ -30,9 +30,9 @@ type MoneyBundle {
   amount: Int!
   description: String
   storage: String!
-  createdAt: String!
-  updatedAt: String!
-  deletedAt: String!
+  createdAt: Float!
+  updatedAt: Float!
+  deletedAt: Float!
 }
 
 type MoneySummary {
