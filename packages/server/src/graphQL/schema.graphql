@@ -1,0 +1,46 @@
+type Query {
+  moneyBundles: [MoneyBundle!]!
+  moneySummary: [MoneySummary!]!
+  currencies: [String!]!
+  currencyEquivalent(
+    currency: String!
+    config: [CurrencyEquivalentConfig!]!
+  ): Float!
+}
+
+type Mutation {
+  createMoneyBundle(
+    currency: String!
+    amount: Int!
+    description: String
+    storage: String!
+  ): MoneyBundle!
+  updateMoneyBundle(
+    id: ID!
+    currency: String
+    amount: Int
+    description: String
+    storage: String
+  ): MoneyBundle!
+}
+
+type MoneyBundle {
+  id: ID!
+  currency: String!
+  amount: Int!
+  description: String
+  storage: String!
+  createdAt: String!
+  updatedAt: String!
+  deletedAt: String!
+}
+
+type MoneySummary {
+  currency: String!
+  amount: Int!
+}
+
+input CurrencyEquivalentConfig {
+  currency: String!
+  exchangeRate: Float!
+}
