@@ -10,6 +10,7 @@ const schema = {
   },
   from: String,
   to: String,
+  transferredTo: String,
   createdAt: {
     type: Number,
     default: Date.now,
