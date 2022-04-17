@@ -21,6 +21,7 @@ type Mutation {
     amount: Int
     description: String
     storage: String
+    transfer: [TransferMoneyBundle!]
   ): MoneyBundle!
 }
 
@@ -33,6 +34,14 @@ type MoneyBundle {
   createdAt: Float!
   updatedAt: Float!
   deletedAt: Float!
+}
+
+input TransferMoneyBundle {
+  id: ID
+  currency: String!
+  amount: Int!
+  description: String
+  storage: String!
 }
 
 type MoneySummary {
