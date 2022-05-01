@@ -1,7 +1,7 @@
 import React from 'react';
-import {render } from 'react-dom';
-import {ApolloProvider } from '@apollo/react-hooks';
-import {BrowserRouter } from 'react-router-dom';
+import {render} from 'react-dom';
+import {ApolloProvider} from '@apollo/react-hooks';
+import {BrowserRouter} from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider} from 'styletron-react';

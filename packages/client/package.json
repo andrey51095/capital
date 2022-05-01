@@ -28,7 +28,8 @@
     "reset-css": "^5.0.1",
     "styletron-engine-atomic": "^1.4.8",
     "styletron-react": "^6.0.2",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "^0.9.16",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

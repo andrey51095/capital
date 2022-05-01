@@ -1,10 +1,12 @@
 const root = '/';
-const table = '/table';
+const moneyBundles = '/money-bundles';
 const pie = '/pie';
+const createMoneyBundle = '/create-money-bundle';
 
 const routes = {
   root,
-  table,
+  moneyBundles,
   pie,
+  createMoneyBundle,
 };
 export default routes;
