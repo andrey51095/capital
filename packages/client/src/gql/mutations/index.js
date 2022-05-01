@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 export const CREATE_MONEY_BUNDLE_MUTATION = gql`
   mutation createTaskMutation(
