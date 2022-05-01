@@ -14,3 +14,9 @@ export const QUERY_MONEY_BUNDLES = gql`
     }
   }
 `;
+
+export const QUERY_CURRENCIES = gql`
+  query Currencies {
+    currencies
+  }
+`;
