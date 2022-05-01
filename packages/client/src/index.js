@@ -1,21 +1,29 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { BrowserRouter } from 'react-router-dom';
+import {render } from 'react-dom';
+import {ApolloProvider } from '@apollo/react-hooks';
+import {BrowserRouter } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
+import {Client as Styletron} from 'styletron-engine-atomic';
+import {Provider as StyletronProvider} from 'styletron-react';
+import {LightTheme, BaseProvider} from 'baseui';
+
 import App from './App';
 import 'reset-css';
 
 import * as serviceWorker from './serviceWorker';
 
-const client = new ApolloClient({
-  uri: `http://localhost:${process.env.APP_SERVER_PORT || 8000}`,
-});
+const client = new ApolloClient({uri: `http://localhost:${process.env.APP_SERVER_PORT || 8000}`});
+
+const engine = new Styletron();
 
 render(
   <ApolloProvider client={client}>
     <BrowserRouter>
-      <App />
+      <StyletronProvider value={engine}>
+        <BaseProvider theme={LightTheme}>
+          <App />
+        </BaseProvider>
+      </StyletronProvider>
     </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root'));
