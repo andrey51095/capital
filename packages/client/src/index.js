@@ -6,6 +6,7 @@ import ApolloClient from 'apollo-boost';
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider} from 'styletron-react';
 import {LightTheme, BaseProvider} from 'baseui';
+import {ToasterContainer, PLACEMENT} from 'baseui/toast';
 
 import App from './App';
 import 'reset-css';
@@ -22,6 +23,7 @@ render(
       <StyletronProvider value={engine}>
         <BaseProvider theme={LightTheme}>
           <App />
+          <ToasterContainer autoHideDuration={5000} placement={PLACEMENT.topRight}/>
         </BaseProvider>
       </StyletronProvider>
     </BrowserRouter>
