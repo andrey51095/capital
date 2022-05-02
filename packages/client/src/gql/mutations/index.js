@@ -7,7 +7,7 @@ export const CREATE_MONEY_BUNDLE_MUTATION = gql`
     $storage: String!,
     $description: String
   ) {
-  createMoneyBundle(
+  moneyBundle: createMoneyBundle(
     currency: $currency
     description: $description
     amount: $amount
