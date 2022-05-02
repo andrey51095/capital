@@ -6,8 +6,9 @@ import { Block } from 'baseui/block';
 import {routes} from '../../constants';
 
 const navItems = [
-  { title: 'Create Money Bundle', itemId: routes.createMoneyBundle },
+  { title: 'Summary', itemId: routes.moneySummary },
   { title: 'Money Bundles', itemId: routes.moneyBundles },
+  { title: 'Create Money Bundle', itemId: routes.createMoneyBundle },
 ];
 
 const SideNav = () => {

@@ -23,7 +23,10 @@ render(
       <StyletronProvider value={engine}>
         <BaseProvider theme={LightTheme}>
           <App />
-          <ToasterContainer autoHideDuration={5000} placement={PLACEMENT.topRight}/>
+          <ToasterContainer
+            autoHideDuration={5000}
+            placement={PLACEMENT.topRight}
+          />
         </BaseProvider>
       </StyletronProvider>
     </BrowserRouter>
