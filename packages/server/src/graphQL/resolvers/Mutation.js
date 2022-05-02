@@ -22,9 +22,9 @@ const updateMoneyBundle = async (_, args, context, _info) => {
     const transferredToItems = await Promise.all(transfer.map(async ({id, ...transferArgs}) => {
       if (id) {
         const docToUpdate = await MoneyBundle.findOne({ id });
-        const amountToTransfer = transferArgs.amount + docToUpdate.amount;
-        const updatedDoc = await MoneyBundle.updateOne({ id }, { amount: amountToTransfer }, { new: true });
-        return {id, amount: amountToTransfer }
+        const amountToUpdate = transferArgs.amount + docToUpdate.amount;
+        const updatedDoc = await MoneyBundle.updateOne({ id }, { amount: amountToUpdate, updatedAt: Date.now()}, { new: true });
+        return {id, amount: amountToTransfer}
       }
 
       const createdMoneyTransfer = await createMoneyBundle(_, transferArgs, context, _info);
