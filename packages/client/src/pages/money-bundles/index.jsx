@@ -30,7 +30,6 @@ const MoneyBundles = () => {
   }, [sortColumn, sortAsc, data]);
 
   const handleSort = (id) => {
-    console.log({id})
     if (id === sortColumn) {
       setSortAsc(asc => !asc);
     } else {
