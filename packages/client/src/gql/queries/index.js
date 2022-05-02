@@ -20,3 +20,12 @@ export const QUERY_CURRENCIES = gql`
     currencies
   }
 `;
+
+export const QUERY_MONEY_SUMMARY = gql`
+  query MoneySummary {
+    summary: moneySummary {
+      amount
+      currency
+    }
+  }
+`;
