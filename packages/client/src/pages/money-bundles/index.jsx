@@ -9,6 +9,7 @@ import {
 import { Block } from 'baseui/block';
 
 import { QUERY_MONEY_BUNDLES } from '../../gql';
+import Currency from '../../components/currency';
 
 const MoneyBundles = () => {
   const { data, loading } = useQuery(QUERY_MONEY_BUNDLES);
@@ -55,7 +56,7 @@ const MoneyBundles = () => {
           {row => row.amount}
         </TableBuilderColumn>
         <TableBuilderColumn header="Currency" id="currency" sortable>
-          {row => row.currency}
+          {row => <Currency value={row.currency} />}
         </TableBuilderColumn>
         <TableBuilderColumn header="Storage">
           {row => row.storage}
