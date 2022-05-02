@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes, Route} from 'react-router-dom';
+import {Routes, Route, Navigate} from 'react-router-dom';
 import {Block} from 'baseui/block';
 
 import MoneyBundles from '../pages/money-bundles';
@@ -9,6 +9,11 @@ import {routes} from '../constants';
 const RootRoutes = () => (
   <Block padding="scale700">
     <Routes>
+      <Route
+        path={routes.root}
+        element={<Navigate to={routes.moneyBundles} />}
+      />
+
       <Route
         path={routes.moneyBundles}
         element={<MoneyBundles />}
