@@ -7,12 +7,12 @@ import {
   SIZE,
 } from 'baseui/table-semantic';
 import { Block } from 'baseui/block';
-import { StyledLink } from "baseui/link";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Drawer } from "baseui/drawer";
 
 import { QUERY_MONEY_BUNDLES } from '../../gql';
 import Currency from '../../components/currency';
+import { routes } from '../../constants';
 
 import Details from './details';
 
@@ -20,7 +20,7 @@ const MoneyBundles = () => {
   const { data, loading } = useQuery(QUERY_MONEY_BUNDLES);
   const [sortColumn, setSortColumn] = useState('currency');
   const [sortAsc, setSortAsc] = useState(true);
-  const location = useLocation();
+  const params = useParams();
   const navigate = useNavigate();
 
   //https://baseweb.design/components/table-semantic/#table-builder-with-sorting
@@ -45,7 +45,7 @@ const MoneyBundles = () => {
       setSortAsc(true);
     }
   }
-  const selectedRow = useMemo(() => (data?.moneyBundles || []).find(({id}) => `#${id}` === location.hash), [location.hash, data]);
+  const selectedRow = useMemo(() => (data?.moneyBundles || []).find(({id}) => id === params.id), [params, data]);
 
   if (loading) {
     return 'Loading...'
@@ -61,7 +61,7 @@ const MoneyBundles = () => {
         onSort={handleSort}
       >
         <TableBuilderColumn header="Amount" id="amount" numeric sortable>
-          {row => <StyledLink href={`#${row.id}`}>{row.amount}</StyledLink>}
+          {row => <Link to={`${routes.moneyBundles}/${row.id}`}>{row.amount}</Link>}
         </TableBuilderColumn>
         <TableBuilderColumn header="Currency" id="currency" sortable>
           {row => <Currency value={row.currency} />}
@@ -77,8 +77,8 @@ const MoneyBundles = () => {
         </TableBuilderColumn>
       </TableBuilder>
 
-      <Drawer isOpen={Boolean(selectedRow)} onClose={() => navigate('#')}>
-        {selectedRow && <Details {...selectedRow}/>}
+      <Drawer isOpen={Boolean(selectedRow)} onClose={() => navigate(routes.moneyBundles)}>
+        {selectedRow && <Details {...selectedRow} allList={data?.moneyBundles || []}/>}
       </Drawer>
     </Block>
   )
