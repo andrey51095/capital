@@ -23,7 +23,9 @@ const RootRoutes = () => (
       <Route
         path={routes.moneyBundles}
         element={<MoneyBundles />}
-      />
+      >
+        <Route path=":id" element={<MoneyBundles />} />
+      </Route>
 
       <Route
         path={routes.createMoneyBundle}

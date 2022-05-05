@@ -24,7 +24,7 @@ const updateMoneyBundle = async (_, args, context, _info) => {
         const docToUpdate = await MoneyBundle.findOne({ id });
         const amountToUpdate = transferArgs.amount + docToUpdate.amount;
         const updatedDoc = await MoneyBundle.updateOne({ id }, { amount: amountToUpdate, updatedAt: Date.now()}, { new: true });
-        return {id, amount: amountToTransfer}
+        return {id, amount: amountToUpdate}
       }
 
       const createdMoneyTransfer = await createMoneyBundle(_, transferArgs, context, _info);
