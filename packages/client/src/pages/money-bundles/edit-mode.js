@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {Block} from 'baseui/block';
 import {useFormik, FormikProvider, FieldArray} from 'formik';
 import {useMutation} from 'react-apollo';
@@ -7,7 +7,8 @@ import {Input} from 'baseui/input';
 import {Select} from 'baseui/select';
 import {Button, KIND, SHAPE, SIZE} from 'baseui/button';
 import {Card} from 'baseui/card';
-import {get} from 'lodash';
+import {get, isEqual, isEmpty} from 'lodash';
+import { toaster } from 'baseui/toast';
 
 import {QUERY_MONEY_BUNDLES, UPDATE_MONEY_BUNDLE_MUTATION} from '../../gql';
 
@@ -38,6 +39,7 @@ const AmountInput = ({error, ...props}) => {
       <Input
         {...props}
         type="number"
+        min="0"
         overrides={{
           Root: {style: {paddingRight: 0}},
           EndEnhancer: {
@@ -62,6 +64,7 @@ const AmountInput = ({error, ...props}) => {
                   value={valueToConcat}
                   type="number"
                   onChange={handleConcatChange}
+                  min="0"
                 />
                 <Button onClick={handleConcatClick}>Add</Button>
               </Block>
@@ -87,12 +90,7 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
       transfer: [],
     },
     onSubmit: async (values, actions) => {
-      await mutate({
-        variables: {
-          ...values,
-          id,
-        },
-      });
+      await mutate({variables: {...values, id}});
       actions.setSubmitting(false);
     },
   });
@@ -125,6 +123,9 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
       description,
       storage,
     }));
+
+  const transferAmount = useMemo(() => values.transfer.reduce((acc, item) => acc + +item.amount, 0), [values.transfer]);
+  const isDisabledByAmount = amount === values.amount && !transferAmount;
 
   return (
     <>
@@ -206,6 +207,7 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
                           handleChange(e)
                         }}
                         type="number"
+                        min="0"
                       />
                     </FormControl>
 
@@ -265,6 +267,7 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
         <Button
           onClick={handleSubmit}
           isLoading={isSubmitting}
+          disabled={!isEmpty(errors) || isDisabledByAmount}
         >
           Submit
         </Button>
