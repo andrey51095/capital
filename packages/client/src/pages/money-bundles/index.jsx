@@ -66,6 +66,9 @@ const MoneyBundles = () => {
         <TableBuilderColumn header="Currency" id="currency" sortable>
           {row => <Currency value={row.currency} />}
         </TableBuilderColumn>
+        <TableBuilderColumn header="Type" id="type" sortable>
+          {row => row.type}
+        </TableBuilderColumn>
         <TableBuilderColumn header="Storage">
           {row => row.storage}
         </TableBuilderColumn>

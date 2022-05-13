@@ -2,6 +2,7 @@ type Query {
   moneyBundles: [MoneyBundle!]!
   moneySummary: [MoneySummary!]!
   currencies: [String!]!
+  types: [OptionType!]!
   currencyEquivalent(
     currency: String!
     config: [CurrencyEquivalentConfig!]!
@@ -31,6 +32,7 @@ type MoneyBundle {
   amount: Int!
   description: String
   storage: String!
+  type: String!
   createdAt: Float!
   updatedAt: Float!
   deletedAt: Float!
@@ -52,4 +54,9 @@ type MoneySummary {
 input CurrencyEquivalentConfig {
   currency: String!
   exchangeRate: Float!
+}
+
+type OptionType {
+  id: ID!
+  label: String!
 }
