@@ -1,4 +1,6 @@
-const {CURRENCY} = require('../../constants');
+const { startCase } = require('lodash');
+
+const { CURRENCY, TYPES } = require('../../constants');
 
 const moneySummary = async (_, _args, context, _info) => {
   const {MoneyBundle} = context.schemas;
@@ -21,6 +23,7 @@ const moneyBundles = async (_, _args, context, _info) => {
 };
 
 const currencies = () => CURRENCY;
+const types = () => TYPES.map(type => ({id: type, label: startCase(type)}));
 
 const currencyEquivalent = async (_, args, context, _info) => {
   const { currency, config } = args;
@@ -44,4 +47,5 @@ module.exports = {
   moneySummary,
   currencies,
   currencyEquivalent,
+  types,
 };

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const shortid = require('shortid');
 
-const {CURRENCY} = require('../../constants');
+const {CURRENCY, TYPES} = require('../../constants');
 
 const Schema = mongoose.Schema;
 
@@ -28,7 +28,12 @@ const schema = {
   currency: {
     type: String,
     enum: CURRENCY,
-  }
+  },
+  type: {
+    type: String,
+    enum: TYPES,
+    default: TYPES[TYPES.length - 1]
+  },
 };
 
 const moneyBundle = new Schema(schema);
