@@ -7,8 +7,7 @@ import {Input} from 'baseui/input';
 import {Select} from 'baseui/select';
 import {Button, KIND, SHAPE, SIZE} from 'baseui/button';
 import {Card} from 'baseui/card';
-import {get, isEqual, isEmpty} from 'lodash';
-import { toaster } from 'baseui/toast';
+import {get, isEmpty} from 'lodash';
 
 import {QUERY_MONEY_BUNDLES, UPDATE_MONEY_BUNDLE_MUTATION} from '../../gql';
 
