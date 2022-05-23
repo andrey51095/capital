@@ -17,12 +17,6 @@ const MoneyBundleForm = ({ values, handleChange, handleBlur, isSubmitting, error
   const currencyOptions = (currenciesResult.data?.currencies || []).map(id => ({ id, label: id }));
   const typesOptions = typesResult.data?.types || [];
 
-  const handleSelectChange = ({ value }) =>
-    handleChange({ target: { name: formKeys.currency, value: value[0]?.id || '' } });
-
-  const handleSelectBlur = (event) =>
-    handleBlur({ target: { ...event.target, name: formKeys.currency } });
-
   const getSelectProps = (key) => ({
     onBlur:  (event) => handleBlur({ target: { ...event.target, name: key } }),
     onChange: ({ value }) => handleChange({ target: { name: key, value: value[0]?.id || '' } }),
