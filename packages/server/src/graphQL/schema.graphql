@@ -24,6 +24,7 @@ type Mutation {
     storage: String
     transfer: [TransferMoneyBundle!]
   ): MoneyBundle!
+  backup: String!
 }
 
 type MoneyBundle {

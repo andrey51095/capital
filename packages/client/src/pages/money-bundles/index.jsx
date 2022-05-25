@@ -15,6 +15,7 @@ import Currency from '../../components/currency';
 import { routes } from '../../constants';
 
 import Details from './details';
+import BackupButton from './backup-button';
 
 const MoneyBundles = () => {
   const { data, loading } = useQuery(QUERY_MONEY_BUNDLES);
@@ -79,6 +80,8 @@ const MoneyBundles = () => {
           {(row) => (row.updatedAt && format(row.updatedAt, 'hh:mm aaa, dd MMM yyyy')) || '-'}
         </TableBuilderColumn>
       </TableBuilder>
+
+      <BackupButton />
 
       <Drawer isOpen={Boolean(selectedRow)} onClose={() => navigate(routes.moneyBundles)}>
         {selectedRow && <Details {...selectedRow} allList={data?.moneyBundles || []}/>}

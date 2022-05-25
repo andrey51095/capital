@@ -1,3 +1,7 @@
+const fs = require('fs');
+const readline = require('readline');
+const {google} = require('googleapis');
+
 const createMoneyBundle = async (_, args, context, _info) => {
   const {MoneyBundle, Feed} = context.schemas;
 
@@ -37,7 +41,17 @@ const updateMoneyBundle = async (_, args, context, _info) => {
   return newDoc;
 };
 
+const backup = async (_, args, context, _info) => {
+  let backupDb = {};
+
+  await Promise.all(Object.entries(context.schemas).map(async ([schemaName, Model]) => {
+    backupDb[schemaName] = await Model.find({})
+  }))
+
+  return JSON.stringify(backupDb, null, 2);
+}
 module.exports = {
   createMoneyBundle,
   updateMoneyBundle,
+  backup,
 };
