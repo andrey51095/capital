@@ -89,7 +89,12 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
       transfer: [],
     },
     onSubmit: async (values, actions) => {
-      await mutate({variables: {...values, id}});
+      await mutate({
+        variables: {
+          ...values,
+          id,
+        },
+      });
       actions.setSubmitting(false);
     },
   });
@@ -157,7 +162,7 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
             >
               {values.transfer?.map((t, i) => {
                 const handleRemoveBundle = () => {
-                  arrayHelpers.remove(i)
+                  arrayHelpers.remove(i);
                 };
                 return (
                   <Card key={i}>
@@ -173,14 +178,14 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
                         getValueLabel={({option}) => `${option.amount}(${option.currency}) - ${option.storage}`}
                         onChange={params => {
                           if (params.type === 'select') {
-                            handleRemoveBundle()
+                            handleRemoveBundle();
                             arrayHelpers.push({
                               ...params.option,
                               amount: 0,
                             });
                           }
                           if (params.type === 'clear') {
-                            handleRemoveBundle()
+                            handleRemoveBundle();
                             arrayHelpers.push({
                               currency,
                               storage,
@@ -201,9 +206,14 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
                       <Input
                         {...getCommonProps(getTransferIndex(i, formKeys.amount))}
                         onChange={e => {
-                          const transferFromOtherCards = values.transfer.reduce((acc, item, index) => index === i ? acc : acc + item.amount, 0)
-                          handleChange({target: {value: amount - transferFromOtherCards - e.target.value, name: formKeys.amount}})
-                          handleChange(e)
+                          const transferFromOtherCards = values.transfer.reduce((acc, item, index) => index === i ? acc : acc + item.amount, 0);
+                          handleChange({
+                            target: {
+                              value: amount - transferFromOtherCards - e.target.value,
+                              name: formKeys.amount,
+                            },
+                          });
+                          handleChange(e);
                         }}
                         type="number"
                         min="0"
@@ -243,7 +253,7 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
                       -
                     </Button>
                   </Card>
-                )
+                );
               })}
 
               <Button
