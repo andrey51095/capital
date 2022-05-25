@@ -45,3 +45,9 @@ export const UPDATE_MONEY_BUNDLE_MUTATION = gql`
     }
   }
 `;
+
+export const BACKUP_MUTATION = gql`
+  mutation Backup{
+    backup
+  }
+`;
