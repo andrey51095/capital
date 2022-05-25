@@ -6,6 +6,8 @@ import {useQuery} from 'react-apollo';
 import {QUERY_MONEY_SUMMARY} from '../../gql/queries';
 import Currency from '../../components/currency';
 
+import SummaryInUsd from './summary-in-usd';
+
 const MoneySummary = () => {
   const {data, loading} = useQuery(QUERY_MONEY_SUMMARY);
 
@@ -28,6 +30,8 @@ const MoneySummary = () => {
           </Block>
         ))}
       </Block>
+
+      <SummaryInUsd summary={data.summary} />
     </Block>
   );
 };
