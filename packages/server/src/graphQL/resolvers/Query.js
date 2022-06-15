@@ -8,7 +8,9 @@ const moneySummary = async (_, _args, context, _info) => {
 
   let summaryByCurrency = {};
 
-  bundles.forEach(({amount, currency}) => {
+  bundles.forEach(({ amount, currency, type }) => {
+    const invested = ['crypto_broker', 'broker', 'p2p-lending'];
+    if (invested.includes(type)) return
     summaryByCurrency[currency] = (summaryByCurrency[currency] || 0) + amount
   });
 
