@@ -15,6 +15,7 @@ type Mutation {
     amount: Int!
     description: String
     storage: String!
+    type: String!
   ): MoneyBundle!
   updateMoneyBundle(
     id: ID!

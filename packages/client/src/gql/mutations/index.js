@@ -5,6 +5,7 @@ export const CREATE_MONEY_BUNDLE_MUTATION = gql`
     $currency: String!,
     $amount: Int!,
     $storage: String!,
+    $type: String!,
     $description: String
   ) {
     moneyBundle: createMoneyBundle(
@@ -12,6 +13,7 @@ export const CREATE_MONEY_BUNDLE_MUTATION = gql`
       description: $description
       amount: $amount
       storage: $storage
+      type: $type
     ) {
       id
       currency
