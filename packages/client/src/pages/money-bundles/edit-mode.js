@@ -49,7 +49,7 @@ const AmountInput = ({error, ...props}) => {
           },
         }}
         endEnhancer={() => (
-          <Block maxWidth="220px">
+          <Block maxWidth="320px">
             {!showConcat && (<Button onClick={handleShowConcat}>Add</Button>)}
             {showConcat && (
               <Block display="flex">
