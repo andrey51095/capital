@@ -7,7 +7,7 @@ import { BACKUP_MUTATION } from '../../gql'
 
 export default function BackupButton() {
   const linkEl = useRef(null)
-  const [mutate, { loading, data }] = useMutation(BACKUP_MUTATION, {
+  const [mutate, { loading }] = useMutation(BACKUP_MUTATION, {
     onError: (error) => { toaster.negative(error.message) },
     onCompleted: (data) => {
       const file = new File([data.backup], 'backup.json', {

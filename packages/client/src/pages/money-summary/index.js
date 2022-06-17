@@ -7,6 +7,7 @@ import {QUERY_MONEY_SUMMARY} from '../../gql/queries';
 import Currency from '../../components/currency';
 
 import SummaryInUsd from './summary-in-usd';
+import SummaryInPln from './summary-in-pln';
 
 const MoneySummary = () => {
   const {data, loading} = useQuery(QUERY_MONEY_SUMMARY);
@@ -32,6 +33,7 @@ const MoneySummary = () => {
       </Block>
 
       <SummaryInUsd summary={data.summary} />
+      <SummaryInPln summary={data.summary} />
     </Block>
   );
 };
