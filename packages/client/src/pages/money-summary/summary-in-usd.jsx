@@ -1,8 +1,9 @@
-import React, {useState, useCallback, useMemo} from 'react'
+import React, { useMemo} from 'react'
 import { Block } from 'baseui/block'
 import { Button } from 'baseui/button'
 
 import Currency from '../../components/currency';
+import {useLazyFetch} from '../../hooks';
 
 const API_KEY = 'Y9Z0UZRuC2yFA8U7u183D8MvOWH4AXHW';
 const USD = 'USD';
@@ -14,32 +15,10 @@ var requestOptions = {
   headers: myHeaders
 };
 
-
-const useFetch = (_url, _options = {}) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
-
-  const handleFetch = useCallback((url = _url, options = _options) => {
-    setLoading(true)
-    setError(null)
-    setData(null)
-
-    url && fetch(url, options)
-      .then(response => response.json())
-      .then(result => setData(result))
-      .catch(error => setError(error))
-      .finally(() => setLoading(false));
-
-  }, [_options, _url]);
-
-  return [handleFetch, { loading, error, data }];
-};
-
 export default function SummaryInUsd({ summary }) {
   const summaryParam = summary.map(({ currency }) => currency).join(',');
   const url = `https://api.apilayer.com/currency_data/live?source=${USD}&currencies=${summaryParam}`;
-  const [getData, {loading, data}] = useFetch(url, requestOptions)
+  const [getData, {loading, data}] = useLazyFetch(url, requestOptions)
 
   const totalValue = useMemo(() => {
     if (!data) {
