@@ -1,9 +1,10 @@
 import React, { useMemo} from 'react'
 import { Block } from 'baseui/block'
 import { Button } from 'baseui/button'
+import { toaster } from 'baseui/toast';
 
 import Currency from '../../components/currency';
-import {useLazyFetch} from '../../hooks';
+import { useLazyFetch } from '../../hooks';
 
 const API_KEY = 'Y9Z0UZRuC2yFA8U7u183D8MvOWH4AXHW';
 const USD = 'USD';
@@ -24,7 +25,18 @@ export default function SummaryInUsd({ summary }) {
     if (!data) {
       return 0
     }
-    return summary.reduce((acc, {currency, amount}) => acc + amount / data.quotes[`${data.source}${currency}`], 0)
+
+    return summary.reduce((acc, { currency, amount }) => {
+      if (currency === USD) return acc + amount;
+
+      const exRate = data.quotes[`${data.source}${currency}`];
+      if (!exRate) {
+        toaster.warning(`${data.source}${currency} exchange rate is missing`)
+        return acc;
+      }
+
+      return  acc + amount / exRate
+    }, 0)
   }, [summary, data]);
 
   const handleClick = () => { getData() }
