@@ -86,6 +86,7 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
     initialValues: {
       amount,
       description,
+      storage,
       transfer: [],
     },
     onSubmit: async (values, actions) => {
@@ -129,7 +130,7 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
     }));
 
   const transferAmount = useMemo(() => values.transfer.reduce((acc, item) => acc + +item.amount, 0), [values.transfer]);
-  const isDisabledByAmount = amount === values.amount && !transferAmount;
+  const isDisabledByAmount = amount === values.amount && description === values.description && storage === values.storage && !transferAmount;
 
   return (
     <>
@@ -144,6 +145,13 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
           error={getError(formKeys.amount)}
           {...getCommonProps(formKeys.amount)}
         />
+
+        <FormControl
+          label={() => 'Storage'}
+          error={getError(formKeys.storage)}
+        >
+          <Input {...getCommonProps(formKeys.storage)} />
+        </FormControl>
 
         <FormControl
           label={() => 'Description'}

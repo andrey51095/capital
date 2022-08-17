@@ -29,6 +29,7 @@ export const UPDATE_MONEY_BUNDLE_MUTATION = gql`
   mutation updateMoneyBundle(
     $id: ID!
     $amount: Int!,
+    $storage: String
     $description: String
     $transfer: [TransferMoneyBundle!]
   ) {
@@ -36,6 +37,7 @@ export const UPDATE_MONEY_BUNDLE_MUTATION = gql`
       id: $id
       amount: $amount
       description: $description
+      storage: $storage
       transfer: $transfer
     ) {
       id
