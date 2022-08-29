@@ -19,7 +19,9 @@ export default function useFetchAll(urls, options) {
       setLoading(false);
     };
     run();
-  }, [urls]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getData, urls]);
 
   return {
     data: arr,
