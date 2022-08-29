@@ -17,7 +17,9 @@ export default function useFetch(url, options) {
     return () => {
       abortController.abort();
     };
-  }, []);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getData, url]);
 
   return response;
 }
