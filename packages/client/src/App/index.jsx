@@ -1,12 +1,15 @@
 import React from 'react';
-import { Block } from 'baseui/block';
+import {Block} from 'baseui/block';
 
 import SideNav from '../components/navigation';
 
-import Routes from './routes'
+import Routes from './routes';
 
 const App = () => (
-  <Block display="flex" height="100vh">
+  <Block
+    display="flex"
+    height="100vh"
+  >
     <SideNav />
 
     <Routes />
