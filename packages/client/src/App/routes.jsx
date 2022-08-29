@@ -24,7 +24,10 @@ const RootRoutes = () => (
         path={routes.moneyBundles}
         element={<MoneyBundles />}
       >
-        <Route path=":id" element={<MoneyBundles />} />
+        <Route
+          path=":id"
+          element={<MoneyBundles />}
+        />
       </Route>
 
       <Route

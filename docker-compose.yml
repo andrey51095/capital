@@ -8,6 +8,7 @@ services:
       - ${APP_CLIENT_PORT}
     environment:
       - PORT=${APP_CLIENT_PORT}
+      - REACT_APP_APILAYER_KEY=${REACT_APP_APILAYER_KEY}
     ports:
       - ${APP_CLIENT_PORT}:${APP_CLIENT_PORT}
     volumes:

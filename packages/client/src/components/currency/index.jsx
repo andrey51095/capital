@@ -1,14 +1,14 @@
-import React from 'react'
-import { Block } from 'baseui/block';
+import React from 'react';
+import {Block} from 'baseui/block';
 
 const colorMapper = {
   USD: 'positive500',
   EUR: 'accent500',
   PLN: 'warning500',
-  default: 'grey'
+  default: 'grey',
 };
 
-const Currency = ({ value }) => (
+const Currency = ({value}) => (
   <Block color={colorMapper[value] || colorMapper.default}>{value}</Block>
 );
 
