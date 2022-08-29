@@ -19,7 +19,7 @@ export default function useFetch(url, options) {
     };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getData, url]);
+  }, [url]);
 
   return response;
 }
