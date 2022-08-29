@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyledSpinnerNext} from 'baseui/spinner';
+import {Spinner} from 'baseui/spinner';
 import {Block} from 'baseui/block';
 import {useQuery} from 'react-apollo';
 
@@ -13,7 +13,7 @@ const MoneySummary = () => {
   const {data, loading} = useQuery(QUERY_MONEY_SUMMARY);
 
   if (loading) {
-    return <StyledSpinnerNext />;
+    return <Spinner />;
   }
 
   return (
