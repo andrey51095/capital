@@ -6,20 +6,23 @@ import { toaster } from 'baseui/toast';
 import Currency from '../../components/currency';
 import { useLazyFetch } from '../../hooks';
 
-const API_KEY = 'Y9Z0UZRuC2yFA8U7u183D8MvOWH4AXHW';
 const USD = 'USD';
-var myHeaders = new Headers();
-myHeaders.append("apikey", API_KEY);
-var requestOptions = {
-  method: 'GET',
-  redirect: 'follow',
-  headers: myHeaders
+const getApilayerArgs = (currencies) => {
+  var myHeaders = new Headers();
+  myHeaders.append("apikey", process.env.REACT_APP_APILAYER_KEY);
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow',
+    headers: myHeaders
+  };
+
+  const url = `https://api.apilayer.com/currency_data/live?source=${USD}&currencies=${currencies}`
+  return [url, requestOptions];
 };
 
 export default function SummaryInUsd({ summary }) {
   const summaryParam = summary.map(({ currency }) => currency).join(',');
-  const url = `https://api.apilayer.com/currency_data/live?source=${USD}&currencies=${summaryParam}`;
-  const [getData, {loading, data}] = useLazyFetch(url, requestOptions)
+  const [getData, {loading, data}] = useLazyFetch(...getApilayerArgs(summaryParam))
 
   const totalValue = useMemo(() => {
     if (!data) {
