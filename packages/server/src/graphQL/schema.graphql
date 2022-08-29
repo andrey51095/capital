@@ -1,6 +1,7 @@
 type Query {
   moneyBundles: [MoneyBundle!]!
-  moneySummary: [MoneySummary!]!
+  moneySummary: [MoneySummary!]! @deprecated
+  moneySummaryV2: MoneySummaryV2Result!
   currencies: [String!]!
   types: [OptionType!]!
   currencyEquivalent(
@@ -51,6 +52,12 @@ input TransferMoneyBundle {
 type MoneySummary {
   currency: String!
   amount: Int!
+}
+
+type MoneySummaryV2Result {
+  total: [MoneySummary!]!
+  notInvested: [MoneySummary!]!
+  invested: [MoneySummary!]!
 }
 
 input CurrencyEquivalentConfig {
