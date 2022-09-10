@@ -22,7 +22,7 @@ const useMoneyBundles = () => {
   const {data, loading, error, refetch} = useQuery(QUERY_MONEY_BUNDLES);
 
   return {
-    data,
+    data: data?.moneyBundles,
     loading,
     error,
     refetch,
