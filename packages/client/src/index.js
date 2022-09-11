@@ -13,7 +13,7 @@ import 'reset-css';
 
 import * as serviceWorker from './serviceWorker';
 
-const client = new ApolloClient({uri: `http://localhost:${process.env.APP_SERVER_PORT || 8000}`});
+const client = new ApolloClient({uri: `http://127.0.0.1:${process.env.APP_SERVER_PORT || 8000}`});
 
 const engine = new Styletron();
 
