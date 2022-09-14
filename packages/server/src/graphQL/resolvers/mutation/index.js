@@ -2,6 +2,8 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 
+const deleteMoneyBundle = require('./delete-money-bundle');
+
 const createMoneyBundle = async (_, args, context, _info) => {
   const {MoneyBundle, Feed} = context.schemas;
 
@@ -54,4 +56,5 @@ module.exports = {
   createMoneyBundle,
   updateMoneyBundle,
   backup,
+  deleteMoneyBundle,
 };

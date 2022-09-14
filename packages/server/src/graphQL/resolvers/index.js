@@ -1,4 +1,4 @@
-const Mutation = require('./Mutation');
+const Mutation = require('./mutation');
 const Query = require('./Query');
 const MoneySummaryV2Result = require('./money-summary-v2-result')
 
