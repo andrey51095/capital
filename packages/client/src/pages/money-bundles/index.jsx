@@ -4,17 +4,19 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Drawer} from 'baseui/drawer';
 
 import {routes} from '../../constants';
-import {useMoneyBundles} from '../../hooks/graphql';
+import {useMoneyBundles, useMoneySummary} from '../../hooks/graphql';
 
 import Details from './details';
 import BackupButton from './backup-button';
 import MoneyBundleTable from './table';
+import SummaryCard from './summary-card';
 
 const MoneyBundles = () => {
   const navigate = useNavigate();
   const {id} = useParams();
 
   const {moneyBundles, loading} = useMoneyBundles();
+  const summaryResult = useMoneySummary();
 
   const selectedRow = useMemo(() => moneyBundles.find(b => b.id ===id), [id, moneyBundles]);
 
@@ -30,7 +32,15 @@ const MoneyBundles = () => {
         display="flex"
         flexDirection="column"
       >
-        <Block>
+        <Block
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="space-between"
+        >
+          <Block display="flex">
+            <SummaryCard {...summaryResult} />
+          </Block>
+
           <BackupButton />
         </Block>
 

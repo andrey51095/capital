@@ -25,7 +25,7 @@ export default function BackupButton() {
   };
 
   return (
-    <>
+    <div>
       <Button
         onClick={handleOnClick}
         isLoading={loading}
@@ -33,6 +33,6 @@ export default function BackupButton() {
         Download data
       </Button>
       <a ref={node => linkEl.current = node} />
-    </>
+    </div>
   );
 }
