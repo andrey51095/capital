@@ -1,6 +1,7 @@
 // @flow
-import gql from 'graphql-tag';
+import {useMemo} from 'react';
 import {useQuery} from 'react-apollo';
+import gql from 'graphql-tag';
 
 const QUERY_MONEY_BUNDLES = gql`
   query MoneyBundles {
@@ -21,8 +22,10 @@ const QUERY_MONEY_BUNDLES = gql`
 const useMoneyBundles = () => {
   const {data, loading, error, refetch} = useQuery(QUERY_MONEY_BUNDLES);
 
+  const moneyBundles = useMemo(() => [...(data?.moneyBundles || [])], [data]);
+
   return {
-    data: data?.moneyBundles,
+    moneyBundles,
     loading,
     error,
     refetch,
