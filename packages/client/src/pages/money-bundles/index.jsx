@@ -1,106 +1,46 @@
-import React, {useState, useMemo} from 'react';
-import {useQuery} from 'react-apollo';
-import {format} from 'date-fns';
-import {
-  TableBuilder,
-  TableBuilderColumn,
-  SIZE,
-} from 'baseui/table-semantic';
+import React, {useMemo} from 'react';
 import {Block} from 'baseui/block';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {Drawer} from 'baseui/drawer';
 
-import {QUERY_MONEY_BUNDLES} from '../../gql';
-import Currency from '../../components/currency';
 import {routes} from '../../constants';
+import {useMoneyBundles} from '../../hooks/graphql';
 
 import Details from './details';
 import BackupButton from './backup-button';
+import MoneyBundleTable from './table';
 
 const MoneyBundles = () => {
-  const {data, loading} = useQuery(QUERY_MONEY_BUNDLES);
-  const [sortColumn, setSortColumn] = useState('currency');
-  const [sortAsc, setSortAsc] = useState(true);
-  const params = useParams();
   const navigate = useNavigate();
+  const {id} = useParams();
 
-  //https://baseweb.design/components/table-semantic/#table-builder-with-sorting
-  const sortedData = useMemo(() => (data?.moneyBundles || []).slice().sort((a, b) => {
-    const left = sortAsc ? a : b;
-    const right = sortAsc ? b : a;
-    const leftValue = String(left[sortColumn]);
-    const rightValue = String(right[sortColumn]);
-    return leftValue.localeCompare(rightValue, 'en', {
-      numeric: true,
-      sensitivity: 'base',
-    });
-  }), [sortColumn, sortAsc, data]);
+  const {moneyBundles, loading} = useMoneyBundles();
 
-  const handleSort = id => {
-    if (id === sortColumn) {
-      setSortAsc(asc => !asc);
-    } else {
-      setSortColumn(id);
-      setSortAsc(true);
-    }
+  const selectedRow = useMemo(() => moneyBundles.find(b => b.id ===id), [id, moneyBundles]);
+
+  const handleViewItem = row => {
+    navigate(`${routes.moneyBundles}/${row.id}`);
   };
-  const selectedRow = useMemo(() => (data?.moneyBundles || []).find(({id}) => id === params.id), [params, data]);
-
-  if (loading) {
-    return 'Loading...';
-  }
 
   return (
-    <Block>
-      <TableBuilder
-        data={sortedData}
-        size={SIZE.compact}
-        sortColumn={sortColumn}
-        sortOrder={sortAsc ? 'ASC' : 'DESC'}
-        onSort={handleSort}
+    <>
+      <Block
+        height="100%"
+        width="100%"
+        display="flex"
+        flexDirection="column"
       >
-        <TableBuilderColumn
-          header="Amount"
-          id="amount"
-          numeric
-          sortable
-        >
-          {row => <Link to={`${routes.moneyBundles}/${row.id}`}>{row.amount}</Link>}
-        </TableBuilderColumn>
-        <TableBuilderColumn
-          header="Currency"
-          id="currency"
-          sortable
-        >
-          {row => <Currency value={row.currency} />}
-        </TableBuilderColumn>
-        <TableBuilderColumn
-          header="Type"
-          id="type"
-          sortable
-        >
-          {row => row.type}
-        </TableBuilderColumn>
-        <TableBuilderColumn header="Storage">
-          {row => row.storage}
-        </TableBuilderColumn>
-        <TableBuilderColumn
-          header="Created At"
-          id="createdAt"
-          sortable
-        >
-          {row => format(row.createdAt, 'hh:mm aaa, dd MMM yyyy')}
-        </TableBuilderColumn>
-        <TableBuilderColumn
-          header="Updated At"
-          id="updatedAt"
-          sortable
-        >
-          {row => (row.updatedAt && format(row.updatedAt, 'hh:mm aaa, dd MMM yyyy')) || '-'}
-        </TableBuilderColumn>
-      </TableBuilder>
+        <Block>
+          <BackupButton />
+        </Block>
 
-      <BackupButton />
+        <MoneyBundleTable
+          handleViewItem={handleViewItem}
+          moneyBundles={moneyBundles}
+          loading={loading}
+        />
+
+      </Block>
 
       <Drawer
         isOpen={Boolean(selectedRow)}
@@ -109,11 +49,11 @@ const MoneyBundles = () => {
         {selectedRow && (
           <Details
             {...selectedRow}
-            allList={data?.moneyBundles || []}
+            allList={moneyBundles}
           />
         )}
       </Drawer>
-    </Block>
+    </>
   );
 };
 

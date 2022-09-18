@@ -8,7 +8,11 @@ import CreateMoneyBundle from '../pages/create-money-bundle';
 import {routes} from '../constants';
 
 const RootRoutes = () => (
-  <Block padding="scale700">
+  <Block
+    display="flex"
+    padding="scale700"
+    width="100%"
+  >
     <Routes>
       <Route
         path={routes.root}
