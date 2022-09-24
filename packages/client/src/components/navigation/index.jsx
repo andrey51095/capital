@@ -7,11 +7,8 @@ import {routes} from '../../constants';
 
 const navItems = [
   {
-    title: 'Summary',
-    itemId: routes.moneySummary,
-  }, {
-    title: 'Money Bundles',
-    itemId: routes.moneyBundles,
+    title: 'Capital',
+    itemId: routes.capital,
   }, {
     title: 'Create Money Bundle',
     itemId: routes.createMoneyBundle,

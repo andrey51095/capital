@@ -3,7 +3,6 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 import {Block} from 'baseui/block';
 
 import MoneyBundles from '../pages/money-bundles';
-import MoneySummary from '../pages/money-summary';
 import CreateMoneyBundle from '../pages/create-money-bundle';
 import {routes} from '../constants';
 
@@ -16,16 +15,11 @@ const RootRoutes = () => (
     <Routes>
       <Route
         path={routes.root}
-        element={<Navigate to={routes.moneySummary} />}
+        element={<Navigate to={routes.capital} />}
       />
 
       <Route
-        path={routes.moneySummary}
-        element={<MoneySummary />}
-      />
-
-      <Route
-        path={routes.moneyBundles}
+        path={routes.capital}
         element={<MoneyBundles />}
       >
         <Route
