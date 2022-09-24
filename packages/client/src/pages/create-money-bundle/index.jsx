@@ -18,7 +18,7 @@ const CreateMoneyBundle = () => {
   const [mutate] = useMutation(CREATE_MONEY_BUNDLE_MUTATION, {
     onCompleted: ({moneyBundle}) => {
       toaster.positive(`Created new money bundle ${moneyBundle.amount}(${moneyBundle.currency})!`);
-      navigate(routes.moneyBundles);
+      navigate(routes.capital);
     },
     refetchQueries: [{query: QUERY_MONEY_BUNDLES}],
     awaitRefetchQueries: true,

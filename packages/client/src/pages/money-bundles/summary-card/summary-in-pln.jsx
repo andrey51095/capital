@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import {Block} from 'baseui/block';
-import {Spinner} from 'baseui/spinner';
 
-import Currency from '../../components/currency';
-import {useFetchAll} from '../../hooks';
+import Currency from '../../../components/currency';
+import {useFetchAll} from '../../../hooks';
+import {Skeleton} from '../../../components/skeleton';
 
 const PLN = 'PLN';
 
@@ -15,7 +15,7 @@ let requestOptions = {
   headers: myHeaders,
 };
 
-export default function SummaryInPln({summary}) {
+export default function SummaryInPln({data: summary, loading: isSummaryLoading}) {
   const urls = useMemo(() => summary.map(({currency}) => currency).filter(c => c !== PLN)
     .map(getUrl), [summary]);
   const {data, loading} = useFetchAll(urls, requestOptions);
@@ -27,17 +27,23 @@ export default function SummaryInPln({summary}) {
 
   const totalValue = data.length ? summary.reduce((acc, {currency, amount}) => acc + (amount * (preparedData[currency]?.bid || 1)), 0) : 0;
 
+  const isLoading = isSummaryLoading || loading;
+
   return (
     <Block
       display="flex"
-      marginTop="scale500"
-      justifyContent="center"
       alignItems="center"
       gridColumnGap="scale400"
     >
-      {loading && <Spinner />}
+      {isLoading && (
+        <Skeleton
+          items={3}
+          height="72px"
+          width="90px"
+        />
+      )}
 
-      {!loading && (
+      {!isLoading && (
         <Block>
           <Block display="flex" >
             ~
@@ -51,12 +57,13 @@ export default function SummaryInPln({summary}) {
               <Block
                 key={key}
                 display="flex"
-                gridColumnGap="scale200"
               >
+                <Block>{preparedData[key].bid.toFixed(2)}</Block>
+                /
+                <Block>{preparedData[key].ask.toFixed(2)}</Block>
+                (
                 <Currency value={key} />
-                <Block>{preparedData[key].effectiveDate }</Block>
-                <Block>{preparedData[key].bid }</Block>
-                <Block>{preparedData[key].ask }</Block>
+                )
               </Block>
             ))}
           </Block>

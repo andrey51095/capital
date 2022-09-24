@@ -21,7 +21,7 @@ const MoneyBundles = () => {
   const selectedRow = useMemo(() => moneyBundles.find(b => b.id ===id), [id, moneyBundles]);
 
   const handleViewItem = row => {
-    navigate(`${routes.moneyBundles}/${row.id}`);
+    navigate(`${routes.capital}/${row.id}`);
   };
 
   return (
@@ -54,7 +54,7 @@ const MoneyBundles = () => {
 
       <Drawer
         isOpen={Boolean(selectedRow)}
-        onClose={() => navigate(routes.moneyBundles)}
+        onClose={() => navigate(routes.capital)}
       >
         {selectedRow && (
           <Details

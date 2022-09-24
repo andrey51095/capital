@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
 import {Block} from 'baseui/block';
-import {Button} from 'baseui/button';
+import {Button, SIZE} from 'baseui/button';
 import {toaster} from 'baseui/toast';
 
-import Currency from '../../components/currency';
-import {useLazyFetch} from '../../hooks';
+import Currency from '../../../components/currency';
+import {useLazyFetch} from '../../../hooks';
 
 const USD = 'USD';
 const getApilayerArgs = currencies => {
@@ -20,7 +20,7 @@ const getApilayerArgs = currencies => {
   return [url, requestOptions];
 };
 
-export default function SummaryInUsd({summary}) {
+export default function SummaryInUsd({data: summary, loading: isSummaryLoading}) {
   const summaryParam = summary.map(({currency}) => currency).join(',');
   const [getData, {loading, data}] = useLazyFetch(...getApilayerArgs(summaryParam));
 
@@ -48,17 +48,20 @@ export default function SummaryInUsd({summary}) {
     getData();
   };
 
+  const isLoading = isSummaryLoading || loading;
+
   return (
     <Block
       display="flex"
       marginTop="scale500"
-      justifyContent="center"
+      // justifyContent="center"
       alignItems="center"
-      gridColumnGap="scale400"
+      gridColumnGap="scale100"
     >
       <Button
         onClick={handleClick}
-        isLoading={loading}
+        isLoading={isLoading}
+        size={SIZE.mini}
       >
         Get in Usd
       </Button>
