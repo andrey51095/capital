@@ -15,13 +15,18 @@ const MoneyBundles = () => {
   const navigate = useNavigate();
   const {id} = useParams();
 
-  const {moneyBundles, loading} = useMoneyBundles();
+  const {moneyBundles, loading, refetch} = useMoneyBundles();
   const summaryResult = useMoneySummary();
 
   const selectedRow = useMemo(() => moneyBundles.find(b => b.id ===id), [id, moneyBundles]);
 
   const handleViewItem = row => {
     navigate(`${routes.capital}/${row.id}`);
+  };
+
+  const handleRefetch = () => {
+    refetch();
+    summaryResult.refetch();
   };
 
   return (
@@ -60,6 +65,7 @@ const MoneyBundles = () => {
           <Details
             {...selectedRow}
             allList={moneyBundles}
+            refetch={handleRefetch}
           />
         )}
       </Drawer>

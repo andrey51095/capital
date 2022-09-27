@@ -20,7 +20,7 @@ const QUERY_MONEY_BUNDLES = gql`
 `;
 
 const useMoneyBundles = () => {
-  const {data, loading, error, refetch} = useQuery(QUERY_MONEY_BUNDLES);
+  const {data, loading, error, refetch} = useQuery(QUERY_MONEY_BUNDLES, {notifyOnNetworkStatusChange: true});
 
   const moneyBundles = useMemo(() => [...(data?.moneyBundles || [])], [data]);
 

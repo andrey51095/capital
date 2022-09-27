@@ -11,15 +11,22 @@ const modes = {
   edit: 1,
 };
 
-const Details = props => {
+const Details = ({refetch, ...props}) => {
   const [mode, setMode] = useState(modes.view);
+
+  const handleOnEditSuccess = () => {
+    setMode(modes.view);
+    refetch();
+  };
+
+  const handleSetMode = (event, index) => setMode(index);
 
   return (
     <Block>
       <ButtonGroup
         mode={MODE.radio}
         selected={mode}
-        onClick={(event, index) => setMode(index)}
+        onClick={handleSetMode}
         size={SIZE.mini}
         shape={SHAPE.pill}
       >
@@ -32,7 +39,7 @@ const Details = props => {
         {mode === modes.edit && (
           <EditMode
             {...props}
-            onSuccess={() => setMode(modes.view)}
+            onSuccess={handleOnEditSuccess}
           />
         )}
       </Block>
