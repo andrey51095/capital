@@ -13,7 +13,7 @@ const QUERY_MONEY_SUMMARY = gql`
 `;
 
 const useMoneySummary = () => {
-  const {data, loading, error, refetch} = useQuery(QUERY_MONEY_SUMMARY);
+  const {data, loading, error, refetch} = useQuery(QUERY_MONEY_SUMMARY, {notifyOnNetworkStatusChange: true});
 
   const summary = useMemo(() => ([...(data?.summary || [])]), [data]);
 
