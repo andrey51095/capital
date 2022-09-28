@@ -3,7 +3,6 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 import {Block} from 'baseui/block';
 
 import MoneyBundles from '../pages/money-bundles';
-import CreateMoneyBundle from '../pages/create-money-bundle';
 import {routes} from '../constants';
 
 const RootRoutes = () => (
@@ -27,11 +26,6 @@ const RootRoutes = () => (
           element={<MoneyBundles />}
         />
       </Route>
-
-      <Route
-        path={routes.createMoneyBundle}
-        element={<CreateMoneyBundle />}
-      />
     </Routes>
   </Block>
 );

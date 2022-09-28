@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
-import {Button} from 'baseui/button';
+import {Button, SIZE, SHAPE} from 'baseui/button';
 import {toaster} from 'baseui/toast';
 import {useMutation} from 'react-apollo';
 
-import {BACKUP_MUTATION} from '../../gql';
+import {BACKUP_MUTATION} from '../../../gql';
 
 export default function BackupButton() {
   const linkEl = useRef(null);
@@ -29,6 +29,8 @@ export default function BackupButton() {
       <Button
         onClick={handleOnClick}
         isLoading={loading}
+        size={SIZE.compact}
+        shape={SHAPE.pill}
       >
         Download data
       </Button>

@@ -1,15 +1,17 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Block} from 'baseui/block';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Drawer} from 'baseui/drawer';
+import {Button} from 'baseui/button';
+import {toaster} from 'baseui/toast';
 
 import {routes} from '../../constants';
-import {useMoneyBundles, useMoneySummary} from '../../hooks/graphql';
+import {useCreateMoneyBundle, useMoneyBundles, useMoneySummary} from '../../hooks/graphql';
 
 import Details from './details';
-import BackupButton from './backup-button';
 import MoneyBundleTable from './table';
 import SummaryCard from './summary-card';
+import CreateMoneyBundleModal from './create-money-bundle-modal';
 
 const MoneyBundles = () => {
   const navigate = useNavigate();
@@ -18,15 +20,35 @@ const MoneyBundles = () => {
   const {moneyBundles, loading, refetch} = useMoneyBundles();
   const summaryResult = useMoneySummary();
 
-  const selectedRow = useMemo(() => moneyBundles.find(b => b.id ===id), [id, moneyBundles]);
-
-  const handleViewItem = row => {
-    navigate(`${routes.capital}/${row.id}`);
-  };
+  const [creatingNewBundle, setCreatingNewBundle] = useState(false);
 
   const handleRefetch = () => {
     refetch();
     summaryResult.refetch();
+  };
+
+  const handleCloseCreateMoneyBundleModal = () =>
+    setCreatingNewBundle(false);
+
+  const handleOpenCreateMoneyBundleModal = () =>
+    setCreatingNewBundle(true);
+
+  const handleOnConfirmCreateMoneyBundle = () => {
+    handleRefetch();
+    handleCloseCreateMoneyBundleModal();
+  };
+
+  const {createMoneyBundle} = useCreateMoneyBundle({
+    onCompleted: ({moneyBundle}) => {
+      toaster.positive(`Created new money bundle ${moneyBundle.amount}(${moneyBundle.currency})!`);
+      handleOnConfirmCreateMoneyBundle();
+    },
+  });
+
+  const selectedRow = useMemo(() => moneyBundles.find(b => b.id ===id), [id, moneyBundles]);
+
+  const handleViewItem = row => {
+    navigate(`${routes.capital}/${row.id}`);
   };
 
   return (
@@ -46,7 +68,11 @@ const MoneyBundles = () => {
             <SummaryCard {...summaryResult} />
           </Block>
 
-          <BackupButton />
+          <Button
+            onClick={handleOpenCreateMoneyBundleModal}
+          >
+            Create Money Bundle
+          </Button>
         </Block>
 
         <MoneyBundleTable
@@ -69,6 +95,14 @@ const MoneyBundles = () => {
           />
         )}
       </Drawer>
+
+      {creatingNewBundle && (
+        <CreateMoneyBundleModal
+          isOpen={creatingNewBundle}
+          onSubmit={createMoneyBundle}
+          onClose={handleCloseCreateMoneyBundleModal}
+        />
+      )}
     </>
   );
 };
