@@ -11,12 +11,13 @@ export default function BackupButton() {
     onError: error => {
       toaster.negative(error.message);
     },
-    onCompleted: data => {
+    onCompleted: async data => {
       const file = new File([data.backup], 'backup.json', {type: 'application/json'});
 
       linkEl.current.href = URL.createObjectURL(file);
       linkEl.current.download = 'backup.json';
-      linkEl.current.click();
+      await linkEl.current.click();
+      toaster.positive('Backup data successfully downloaded!');
     },
   });
 
