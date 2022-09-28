@@ -22,12 +22,14 @@ const MoneyBundleTable = ({moneyBundles, handleViewItem, loading}) => {
   ];
 
   return (
-    <>
+    <Block
+      position="relative"
+      height="100%"
+    >
       <Block
-        display="flex"
-        justifyContent="end"
-        marginBottom="-50px"
-        marginTop="20px"
+        position="absolute"
+        right="4px"
+        top="12px"
       >
         <BackupButton />
       </Block>
@@ -38,7 +40,7 @@ const MoneyBundleTable = ({moneyBundles, handleViewItem, loading}) => {
         columns={columns}
         rows={tableData}
       />
-    </>
+    </Block>
   );
 };
 export default MoneyBundleTable;
