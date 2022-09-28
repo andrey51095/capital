@@ -5,8 +5,9 @@ import {Input} from 'baseui/input';
 import {Select} from 'baseui/select';
 import {Button} from 'baseui/button';
 import {useQuery} from 'react-apollo';
+import {Block} from 'baseui/block';
 
-import {QUERY_CURRENCIES, QUERY_TYPES} from '../../gql';
+import {QUERY_CURRENCIES, QUERY_TYPES} from '../../../gql';
 
 import {formKeys} from './constants';
 
@@ -38,27 +39,37 @@ const MoneyBundleForm = ({values, handleChange, handleBlur, isSubmitting, errors
 
   return (
     <Form>
-      <FormControl
-        label={() => 'Amount *'}
-        error={touched[formKeys.amount] && errors[formKeys.amount]}
+      <Block
+        display="grid"
+        gridTemplateColumns="1fr 1fr"
+        gridColumnGap="scale200"
       >
-        <Field
-          as={Input}
-          name={formKeys.amount}
-          type="number"
-        />
-      </FormControl>
+        <Block>
+          <FormControl
+            label={() => 'Amount *'}
+            error={touched[formKeys.amount] && errors[formKeys.amount]}
+          >
+            <Field
+              as={Input}
+              name={formKeys.amount}
+              type="number"
+            />
+          </FormControl>
+        </Block>
 
-      <FormControl
-        label={() => 'Currency *'}
-        error={touched[formKeys.currency] && errors[formKeys.currency]}
-      >
-        <Select
-          {...getSelectProps(formKeys.currency)}
-          options={currencyOptions}
-          isLoading={currenciesResult.loading}
-        />
-      </FormControl>
+        <Block>
+          <FormControl
+            label={() => 'Currency *'}
+            error={touched[formKeys.currency] && errors[formKeys.currency]}
+          >
+            <Select
+              {...getSelectProps(formKeys.currency)}
+              options={currencyOptions}
+              isLoading={currenciesResult.loading}
+            />
+          </FormControl>
+        </Block>
+      </Block>
 
       <FormControl
         label={() => 'Type *'}
@@ -90,13 +101,17 @@ const MoneyBundleForm = ({values, handleChange, handleBlur, isSubmitting, errors
           name={formKeys.description}
         />
       </FormControl>
-
-      <Button
-        type="submit"
-        isLoading={isSubmitting}
+      <Block
+        display="flex"
+        justifyContent="end"
       >
-        Submit
-      </Button>
+        <Button
+          type="submit"
+          isLoading={isSubmitting}
+        >
+          Submit
+        </Button>
+      </Block>
     </Form>
   );
 };

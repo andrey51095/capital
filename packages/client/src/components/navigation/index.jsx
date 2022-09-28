@@ -9,9 +9,6 @@ const navItems = [
   {
     title: 'Capital',
     itemId: routes.capital,
-  }, {
-    title: 'Create Money Bundle',
-    itemId: routes.createMoneyBundle,
   },
 ];
 
@@ -23,6 +20,10 @@ const SideNav = () => {
     event.preventDefault();
     navigate(item.itemId);
   };
+
+  if (navItems.length === 1) {
+    return null;
+  }
 
   return (
     <Block
