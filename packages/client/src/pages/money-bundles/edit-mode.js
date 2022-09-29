@@ -1,15 +1,12 @@
 import React, {useState, useMemo} from 'react';
 import {Block} from 'baseui/block';
 import {useFormik, FormikProvider, FieldArray} from 'formik';
-import {useMutation} from 'react-apollo';
 import {FormControl} from 'baseui/form-control';
 import {Input} from 'baseui/input';
 import {Select} from 'baseui/select';
 import {Button, KIND, SHAPE, SIZE} from 'baseui/button';
 import {Card} from 'baseui/card';
 import {get, isEmpty} from 'lodash';
-
-import {QUERY_MONEY_BUNDLES, UPDATE_MONEY_BUNDLE_MUTATION} from '../../gql';
 
 import {formKeys, getTransferIndex} from './constants';
 
@@ -75,13 +72,7 @@ const AmountInput = ({error, ...props}) => {
   );
 };
 
-const EditMode = ({amount, description, id, onSuccess, currency, storage, allList}) => {
-  const [mutate] = useMutation(UPDATE_MONEY_BUNDLE_MUTATION, {
-    onCompleted: onSuccess,
-    refetchQueries: [{query: QUERY_MONEY_BUNDLES}],
-    awaitRefetchQueries: true,
-  });
-
+const EditMode = ({amount, description, id, currency, storage, allList, onSubmit}) => {
   const formik = useFormik({
     initialValues: {
       amount,
@@ -90,11 +81,9 @@ const EditMode = ({amount, description, id, onSuccess, currency, storage, allLis
       transfer: [],
     },
     onSubmit: async (values, actions) => {
-      await mutate({
-        variables: {
-          ...values,
-          id,
-        },
+      await onSubmit({
+        ...values,
+        id,
       });
       actions.setSubmitting(false);
     },
