@@ -6,12 +6,13 @@ import {Button} from 'baseui/button';
 import {toaster} from 'baseui/toast';
 
 import {routes} from '../../constants';
-import {useCreateMoneyBundle, useMoneyBundles, useMoneySummary} from '../../hooks/graphql';
+import {useCreateMoneyBundle, useMoneyBundles, useMoneySummary, useUpdateMoneyBundle} from '../../hooks/graphql';
 
 import Details from './details';
 import MoneyBundleTable from './table';
 import SummaryCard from './summary-card';
 import CreateMoneyBundleModal from './create-money-bundle-modal';
+import EditDrawer from './edit-drawer';
 
 const MoneyBundles = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const MoneyBundles = () => {
   const summaryResult = useMoneySummary();
 
   const [creatingNewBundle, setCreatingNewBundle] = useState(false);
+  const [editingBundle, setEditingBundle] = useState(null);
 
   const handleRefetch = () => {
     refetch();
@@ -33,15 +35,35 @@ const MoneyBundles = () => {
   const handleOpenCreateMoneyBundleModal = () =>
     setCreatingNewBundle(true);
 
+  const handleCloseEditing = () => {
+    setEditingBundle(null);
+  };
+
+  const handleSetEditingBundle = data => {
+    setEditingBundle(data);
+  };
+
   const handleOnConfirmCreateMoneyBundle = () => {
     handleRefetch();
     handleCloseCreateMoneyBundleModal();
+  };
+
+  const handleOnConfirmUpdateMoneyBundle = () => {
+    handleRefetch();
+    handleCloseEditing();
   };
 
   const {createMoneyBundle} = useCreateMoneyBundle({
     onCompleted: ({moneyBundle}) => {
       toaster.positive(`Created new money bundle ${moneyBundle.amount}(${moneyBundle.currency})!`);
       handleOnConfirmCreateMoneyBundle();
+    },
+  });
+
+  const {updateMoneyBundle} = useUpdateMoneyBundle({
+    onCompleted: ({moneyBundle}) => {
+      toaster.positive(`Updated money bundle ${moneyBundle.amount}(${moneyBundle.currency})!`);
+      handleOnConfirmUpdateMoneyBundle();
     },
   });
 
@@ -77,6 +99,7 @@ const MoneyBundles = () => {
 
         <MoneyBundleTable
           handleViewItem={handleViewItem}
+          handleEditItem={handleSetEditingBundle}
           moneyBundles={moneyBundles}
           loading={loading}
         />
@@ -96,6 +119,15 @@ const MoneyBundles = () => {
         )}
       </Drawer>
 
+      {editingBundle && (
+        <EditDrawer
+          {...editingBundle}
+          allList={moneyBundles}
+          isOpen={Boolean(editingBundle)}
+          onSubmit={updateMoneyBundle}
+          onClose={handleCloseEditing}
+        />
+      )}
       {creatingNewBundle && (
         <CreateMoneyBundleModal
           isOpen={creatingNewBundle}

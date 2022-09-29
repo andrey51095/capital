@@ -3,10 +3,12 @@ import {Show} from 'baseui/icon';
 import {StatefulDataTable} from 'baseui/data-table';
 import {Block} from 'baseui/block';
 
+import {Pencil} from '../../../icons';
+
 import BackupButton from './backup-button';
 import columns from './columns';
 
-const MoneyBundleTable = ({moneyBundles, handleViewItem, loading}) => {
+const MoneyBundleTable = ({moneyBundles, handleViewItem, loading, handleEditItem}) => {
 
   const tableData = useMemo(() => (moneyBundles || []).map(data => ({
     id: data.id,
@@ -15,9 +17,13 @@ const MoneyBundleTable = ({moneyBundles, handleViewItem, loading}) => {
 
   const rowActions = [
     {
-      label: 'Check',
+      label: 'View',
       onClick: ({row}) => handleViewItem(row),
       renderIcon: ({size}) => <Show size={size} />,
+    }, {
+      label: 'Edit',
+      onClick: ({row}) => handleEditItem(row.data),
+      renderIcon: ({size}) => <Pencil size={size} />,
     },
   ];
 
