@@ -1,45 +1,22 @@
 import React from 'react';
+import {ModalBody} from 'baseui/modal';
 import {Block} from 'baseui/block';
-import {HeadingXSmall} from 'baseui/typography';
+import {LabelSmall} from 'baseui/typography';
 import {format} from 'date-fns';
-
-import Currency from '../../components/currency';
 
 const TextWithTitle = ({text, title}) => (
   <Block margin="scale300">
-    <Block color="primary500">
+    <LabelSmall>
       {title}
-    </Block>
+    </LabelSmall>
     <Block>
       {text}
     </Block>
   </Block>
 );
 
-const ViewMode = ({currency, amount, type, storage, description, createdAt, updatedAt}) => (
-  <div>
-    <Block
-      display="flex"
-      alignItems="end"
-    >
-      <HeadingXSmall>
-        {storage}
-      </HeadingXSmall>
-
-      <Block
-        marginLeft="scale200"
-        marginRight="scale50"
-      >
-        {amount}
-      </Block>
-
-      <Block display="flex">
-        (
-        <Currency value={currency} />
-        )
-      </Block>
-    </Block>
-
+const Body = ({type, description, createdAt, updatedAt}) => (
+  <ModalBody>
     <Block
       display="grid"
       gridTemplateColumns="1fr 1fr"
@@ -70,7 +47,7 @@ const ViewMode = ({currency, amount, type, storage, description, createdAt, upda
         />
       )}
     </Block>
-  </div>
+  </ModalBody>
 );
 
-export default ViewMode;
+export default Body;

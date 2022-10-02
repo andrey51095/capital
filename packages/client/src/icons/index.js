@@ -1,3 +1,4 @@
+import Eye from './eye';
 import Pencil from './pencil';
 
-export {Pencil};
+export {Eye, Pencil};
