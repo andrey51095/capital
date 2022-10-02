@@ -1,28 +1,23 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {Block} from 'baseui/block';
-import {useNavigate, useParams} from 'react-router-dom';
-import {Drawer} from 'baseui/drawer';
 import {Button} from 'baseui/button';
 import {toaster} from 'baseui/toast';
 
-import {routes} from '../../constants';
 import {useCreateMoneyBundle, useMoneyBundles, useMoneySummary, useUpdateMoneyBundle} from '../../hooks/graphql';
 
-import Details from './details';
 import MoneyBundleTable from './table';
 import SummaryCard from './summary-card';
+import ViewMoneyBundleModal from './view-money-bundle-modal';
 import CreateMoneyBundleModal from './create-money-bundle-modal';
 import EditDrawer from './edit-drawer';
 
 const MoneyBundles = () => {
-  const navigate = useNavigate();
-  const {id} = useParams();
-
   const {moneyBundles, loading, refetch} = useMoneyBundles();
   const summaryResult = useMoneySummary();
 
-  const [creatingNewBundle, setCreatingNewBundle] = useState(false);
+  const [viewingBundle, setViewingBundle] = useState(null);
   const [editingBundle, setEditingBundle] = useState(null);
+  const [creatingNewBundle, setCreatingNewBundle] = useState(false);
 
   const handleRefetch = () => {
     refetch();
@@ -41,6 +36,14 @@ const MoneyBundles = () => {
 
   const handleSetEditingBundle = data => {
     setEditingBundle(data);
+  };
+
+  const handleCloseViewing = () => {
+    setViewingBundle(null);
+  };
+
+  const handleSetViewingBundle = data => {
+    setViewingBundle(data);
   };
 
   const handleOnConfirmCreateMoneyBundle = () => {
@@ -67,12 +70,6 @@ const MoneyBundles = () => {
     },
   });
 
-  const selectedRow = useMemo(() => moneyBundles.find(b => b.id ===id), [id, moneyBundles]);
-
-  const handleViewItem = row => {
-    navigate(`${routes.capital}/${row.id}`);
-  };
-
   return (
     <>
       <Block
@@ -98,7 +95,7 @@ const MoneyBundles = () => {
         </Block>
 
         <MoneyBundleTable
-          handleViewItem={handleViewItem}
+          handleViewItem={handleSetViewingBundle}
           handleEditItem={handleSetEditingBundle}
           moneyBundles={moneyBundles}
           loading={loading}
@@ -106,18 +103,13 @@ const MoneyBundles = () => {
 
       </Block>
 
-      <Drawer
-        isOpen={Boolean(selectedRow)}
-        onClose={() => navigate(routes.capital)}
-      >
-        {selectedRow && (
-          <Details
-            {...selectedRow}
-            allList={moneyBundles}
-            refetch={handleRefetch}
-          />
-        )}
-      </Drawer>
+      {viewingBundle && (
+        <ViewMoneyBundleModal
+          {...viewingBundle}
+          isOpen={Boolean(viewingBundle)}
+          onClose={handleCloseViewing}
+        />
+      )}
 
       {editingBundle && (
         <EditDrawer
@@ -128,6 +120,7 @@ const MoneyBundles = () => {
           onClose={handleCloseEditing}
         />
       )}
+
       {creatingNewBundle && (
         <CreateMoneyBundleModal
           isOpen={creatingNewBundle}
