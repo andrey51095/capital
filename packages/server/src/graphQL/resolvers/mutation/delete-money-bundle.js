@@ -9,7 +9,7 @@ module.exports = async (_, args, context, _info) => {
   if (oldDoc.deletedAt) {
     throw new Error('Already deleted')
   }
-  const newDoc = await findOneAndUpdate({ id }, {deletedAt: Date.now()}, {
+  const newDoc = await MoneyBundle.findOneAndUpdate({ id }, {deletedAt: Date.now()}, {
     new: true
   });
 
