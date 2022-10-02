@@ -3,13 +3,20 @@ import {Block} from 'baseui/block';
 import {Button} from 'baseui/button';
 import {toaster} from 'baseui/toast';
 
-import {useCreateMoneyBundle, useMoneyBundles, useMoneySummary, useUpdateMoneyBundle} from '../../hooks/graphql';
+import {
+  useCreateMoneyBundle,
+  useDeleteMoneyBundle,
+  useMoneyBundles,
+  useMoneySummary,
+  useUpdateMoneyBundle,
+} from '../../hooks/graphql';
 
 import MoneyBundleTable from './table';
 import SummaryCard from './summary-card';
 import ViewMoneyBundleModal from './view-money-bundle-modal';
 import CreateMoneyBundleModal from './create-money-bundle-modal';
 import EditDrawer from './edit-drawer';
+import DeleteMoneyBundleModal from './delete-money-bundle-modal';
 
 const MoneyBundles = () => {
   const {moneyBundles, loading, refetch} = useMoneyBundles();
@@ -17,56 +24,59 @@ const MoneyBundles = () => {
 
   const [viewingBundle, setViewingBundle] = useState(null);
   const [editingBundle, setEditingBundle] = useState(null);
-  const [creatingNewBundle, setCreatingNewBundle] = useState(false);
+  const [deletingBundle, setDeletingBundle] = useState(null);
+  const [creatingBundle, setCreatingBundle] = useState(false);
 
   const handleRefetch = () => {
     refetch();
     summaryResult.refetch();
   };
 
-  const handleCloseCreateMoneyBundleModal = () =>
-    setCreatingNewBundle(false);
+  const handleCloseCreating = () => setCreatingBundle(false);
+  const handleOpenCreating = () => setCreatingBundle(true);
 
-  const handleOpenCreateMoneyBundleModal = () =>
-    setCreatingNewBundle(true);
+  const handleCloseEditing = () => setEditingBundle(null);
+  const handleOpenEditing = data => setEditingBundle(data);
 
-  const handleCloseEditing = () => {
-    setEditingBundle(null);
-  };
+  const handleCloseViewing = () => setViewingBundle(null);
+  const handleOpenViewing = data => setViewingBundle(data);
 
-  const handleSetEditingBundle = data => {
-    setEditingBundle(data);
-  };
+  const handleCloseDeleting = () => setDeletingBundle(null);
+  const handleOpenDeleing = data => setDeletingBundle(data);
 
-  const handleCloseViewing = () => {
-    setViewingBundle(null);
-  };
-
-  const handleSetViewingBundle = data => {
-    setViewingBundle(data);
-  };
-
-  const handleOnConfirmCreateMoneyBundle = () => {
+  const handleOnConfirmCreate = () => {
     handleRefetch();
-    handleCloseCreateMoneyBundleModal();
+    handleCloseCreating();
   };
 
-  const handleOnConfirmUpdateMoneyBundle = () => {
+  const handleOnConfirmUpdate = () => {
     handleRefetch();
     handleCloseEditing();
+  };
+
+  const handleOnConfirmDelete = () => {
+    handleRefetch();
+    handleCloseDeleting();
   };
 
   const {createMoneyBundle} = useCreateMoneyBundle({
     onCompleted: ({moneyBundle}) => {
       toaster.positive(`Created new money bundle ${moneyBundle.amount}(${moneyBundle.currency})!`);
-      handleOnConfirmCreateMoneyBundle();
+      handleOnConfirmCreate();
     },
   });
 
   const {updateMoneyBundle} = useUpdateMoneyBundle({
     onCompleted: ({moneyBundle}) => {
       toaster.positive(`Updated money bundle ${moneyBundle.amount}(${moneyBundle.currency})!`);
-      handleOnConfirmUpdateMoneyBundle();
+      handleOnConfirmUpdate();
+    },
+  });
+
+  const {deleteMoneyBundle, loading: isDeletingLoading} = useDeleteMoneyBundle({
+    onCompleted: () => {
+      toaster.positive('Successfully Deleted!');
+      handleOnConfirmDelete();
     },
   });
 
@@ -87,20 +97,18 @@ const MoneyBundles = () => {
             <SummaryCard {...summaryResult} />
           </Block>
 
-          <Button
-            onClick={handleOpenCreateMoneyBundleModal}
-          >
+          <Button onClick={handleOpenCreating}>
             Create Money Bundle
           </Button>
         </Block>
 
         <MoneyBundleTable
-          handleViewItem={handleSetViewingBundle}
-          handleEditItem={handleSetEditingBundle}
+          handleView={handleOpenViewing}
+          handleEdit={handleOpenEditing}
+          handleDelete={handleOpenDeleing}
           moneyBundles={moneyBundles}
           loading={loading}
         />
-
       </Block>
 
       {viewingBundle && (
@@ -121,11 +129,21 @@ const MoneyBundles = () => {
         />
       )}
 
-      {creatingNewBundle && (
+      {creatingBundle && (
         <CreateMoneyBundleModal
-          isOpen={creatingNewBundle}
+          isOpen={creatingBundle}
           onSubmit={createMoneyBundle}
-          onClose={handleCloseCreateMoneyBundleModal}
+          onClose={handleCloseCreating}
+        />
+      )}
+
+      {deletingBundle && (
+        <DeleteMoneyBundleModal
+          {...deletingBundle}
+          isOpen={Boolean(deletingBundle)}
+          onSubmit={deleteMoneyBundle}
+          isSubmitting={isDeletingLoading}
+          onClose={handleCloseDeleting}
         />
       )}
     </>
