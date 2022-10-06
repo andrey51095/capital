@@ -3,8 +3,8 @@ import {Icon} from 'baseui/icon';
 
 import {SvgOverrides} from './overrides';
 
-function Pencil(props, ref) {
-  const {title = 'Pencil', size, color, ...restProps} = props;
+function Trash(props, ref) {
+  const {title = 'Trash', size, color, ...restProps} = props;
 
   return (
     <Icon
@@ -24,5 +24,5 @@ function Pencil(props, ref) {
   );
 }
 
-export default React.forwardRef(Pencil);
+export default React.forwardRef(Trash);
 

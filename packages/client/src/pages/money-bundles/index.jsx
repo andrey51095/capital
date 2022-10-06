@@ -15,7 +15,7 @@ import MoneyBundleTable from './table';
 import SummaryCard from './summary-card';
 import ViewMoneyBundleModal from './view-money-bundle-modal';
 import CreateMoneyBundleModal from './create-money-bundle-modal';
-import EditDrawer from './edit-drawer';
+import EditDrawer from './edit-money-bundle-drawer';
 import DeleteMoneyBundleModal from './delete-money-bundle-modal';
 
 const MoneyBundles = () => {

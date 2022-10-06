@@ -4,7 +4,7 @@ import {Icon} from 'baseui/icon';
 import {SvgOverrides} from './overrides';
 
 function Eye(props, ref) {
-  const {title = 'Pencil', size, color, ...restProps} = props;
+  const {title = 'Eye', size, color, ...restProps} = props;
 
   return (
     <Icon

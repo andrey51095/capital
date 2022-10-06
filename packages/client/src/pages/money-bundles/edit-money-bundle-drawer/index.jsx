@@ -1,16 +1,14 @@
 import React from 'react';
 import {Drawer} from 'baseui/drawer';
 
-import EditMode from './edit-mode';
+import EditForm from './edit-form';
 
 const EditDrawer = ({isOpen, onClose, ...restProps}) => (
   <Drawer
     isOpen={isOpen}
     onClose={onClose}
   >
-    <EditMode
-      {...restProps}
-    />
+    <EditForm {...restProps} />
   </Drawer>
 );
 
