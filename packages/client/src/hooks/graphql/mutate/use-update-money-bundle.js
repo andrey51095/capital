@@ -8,6 +8,7 @@ const UPDATE_MONEY_BUNDLE_MUTATION = gql`
     $amount: Int!,
     $storage: String
     $description: String
+    $type: String
     $transfer: [TransferMoneyBundle!]
   ) {
     moneyBundle: updateMoneyBundle(
@@ -15,6 +16,7 @@ const UPDATE_MONEY_BUNDLE_MUTATION = gql`
       amount: $amount
       description: $description
       storage: $storage
+      type: $type
       transfer: $transfer
     ) {
       id
@@ -23,6 +25,7 @@ const UPDATE_MONEY_BUNDLE_MUTATION = gql`
       amount
       storage
       createdAt
+      type
     }
   }
 `;

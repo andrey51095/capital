@@ -6,15 +6,6 @@ export const QUERY_CURRENCIES = gql`
   }
 `;
 
-export const QUERY_TYPES = gql`
-  query Types {
-    types {
-      id
-      label
-    }
-  }
-`;
-
 export const QUERY_MONEY_SUMMARY = gql`
   query MoneySummary {
     summary: moneySummary {

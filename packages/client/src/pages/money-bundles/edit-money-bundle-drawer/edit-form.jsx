@@ -4,21 +4,26 @@ import {useFormik, FormikProvider} from 'formik';
 import {FormControl} from 'baseui/form-control';
 import {Input} from 'baseui/input';
 import {Button} from 'baseui/button';
+import {Select} from 'baseui/select';
 import {get, isEmpty} from 'lodash';
 
+import {useBundleTypesOptions} from '../../../hooks/graphql';
 import {formKeys} from '../constants';
 
 import AmountInput from './amount-input';
 import TransferBundles from './transfer-bundles';
 
-const EditForm = ({amount, description, id, currency, storage, allList, onSubmit}) => {
+const EditForm = ({amount, description, id, currency, storage, allList, onSubmit, type}) => {
+  const {typesOptions, loading: typesOptionsLoading} = useBundleTypesOptions();
+
   const formik = useFormik({
     initialValues: {
       amount,
-      description,
+      description: description || '',
       storage,
       transfer: [],
       currency,
+      ...(type === 'invalid' ? {type} : {}),
     },
     onSubmit: async (values, actions) => {
       await onSubmit({
@@ -46,6 +51,22 @@ const EditForm = ({amount, description, id, currency, storage, allList, onSubmit
     value: get(values, key),
   });
 
+  const getSelectProps = key => ({
+    onBlur: event => handleBlur({
+      target: {
+        ...event.target,
+        name: key,
+      },
+    }),
+    onChange: ({value}) => handleChange({
+      target: {
+        name: key,
+        value: value[0]?.id || '',
+      },
+    }),
+    value: values[key] && [{id: values[key]}],
+  });
+  console.log(getSelectProps('type'));
   const getError = key => touched[key] && errors[key];
 
   const allListFilteredByCurrency = allList
@@ -59,7 +80,15 @@ const EditForm = ({amount, description, id, currency, storage, allList, onSubmit
     }));
 
   const transferAmount = useMemo(() => values.transfer.reduce((acc, item) => acc + +item.amount, 0), [values.transfer]);
-  const isDisabledByAmount = amount === values.amount && description === values.description && storage === values.storage && !transferAmount;
+  const isDisabled = (() => {
+    if (amount === values.amount && description === values.description && storage === values.storage && !transferAmount) {
+      if (values.type) {
+        return values.type === type;
+      }
+      return true;
+    }
+    return false;
+  })();
 
   return (
     <>
@@ -69,13 +98,27 @@ const EditForm = ({amount, description, id, currency, storage, allList, onSubmit
       >
         Edit
         {' '}
-        { values.storage}
+        {values.storage}
       </Block>
       <FormikProvider value={formik}>
         <AmountInput
           error={getError(formKeys.amount)}
           {...getCommonProps(formKeys.amount)}
         />
+
+        {values.type && (
+          <FormControl
+            label={() => 'Type'}
+            error={getError(formKeys.type)}
+          >
+            <Select
+              {...getSelectProps(formKeys.type)}
+              options={typesOptions}
+              isLoading={typesOptionsLoading}
+              clearable={false}
+            />
+          </FormControl>
+        )}
 
         <FormControl
           label={() => 'Storage'}
@@ -101,7 +144,7 @@ const EditForm = ({amount, description, id, currency, storage, allList, onSubmit
         <Button
           onClick={handleSubmit}
           isLoading={isSubmitting}
-          disabled={!isEmpty(errors) || isDisabledByAmount}
+          disabled={!isEmpty(errors) || isDisabled}
         >
           Submit
         </Button>

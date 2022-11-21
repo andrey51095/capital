@@ -7,19 +7,19 @@ import {Button} from 'baseui/button';
 import {useQuery} from 'react-apollo';
 import {Block} from 'baseui/block';
 
-import {QUERY_CURRENCIES, QUERY_TYPES} from '../../../gql';
+import {QUERY_CURRENCIES} from '../../../gql';
+import {useBundleTypesOptions} from '../../../hooks/graphql';
 
 import {formKeys} from './constants';
 
 const MoneyBundleForm = ({values, handleChange, handleBlur, isSubmitting, errors, touched}) => {
   const currenciesResult = useQuery(QUERY_CURRENCIES);
-  const typesResult = useQuery(QUERY_TYPES);
+  const {typesOptions, loading: typesOptionsLoading} = useBundleTypesOptions();
 
   const currencyOptions = (currenciesResult.data?.currencies || []).map(id => ({
     id,
     label: id,
   }));
-  const typesOptions = typesResult.data?.types || [];
 
   const getSelectProps = key => ({
     onBlur: event => handleBlur({
@@ -78,7 +78,7 @@ const MoneyBundleForm = ({values, handleChange, handleBlur, isSubmitting, errors
         <Select
           {...getSelectProps(formKeys.type)}
           options={typesOptions}
-          isLoading={typesResult.loading}
+          isLoading={typesOptionsLoading}
         />
       </FormControl>
 
