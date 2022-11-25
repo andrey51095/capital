@@ -42,7 +42,7 @@ services:
     ports:
       - ${DATABASE_PORT}:${DATABASE_PORT}
     volumes:
-      - mongo:/data/db
+      - mongo:/data/${MONGO_DB:-db}
 
 volumes:
   mongo:
