@@ -6,5 +6,5 @@ const schemas = require('../database/schemas');
 module.exports = new GraphQLServer({
   typeDefs: './src/graphQL/schema.graphql',
   resolvers,
-  context: {schemas},
+  context: { schemas },
 });
