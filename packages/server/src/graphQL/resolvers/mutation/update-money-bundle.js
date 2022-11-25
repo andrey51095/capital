@@ -1,3 +1,4 @@
+const createMoneyBundle = require('./create-money-bundle');
 
 module.exports = async (_, args, context, _info) => {
   const {id, transfer, ...fieldsToUpdate} = args;

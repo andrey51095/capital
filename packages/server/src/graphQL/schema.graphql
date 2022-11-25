@@ -49,6 +49,7 @@ input TransferMoneyBundle {
   amount: Int!
   description: String
   storage: String!
+  type: String!
 }
 
 type MoneySummary {
