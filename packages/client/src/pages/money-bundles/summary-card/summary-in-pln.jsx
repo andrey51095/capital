@@ -20,7 +20,7 @@ export default function SummaryInPln({data: summary, loading: isSummaryLoading})
     .map(getUrl), [summary]);
   const {data, loading} = useFetchAll(urls, requestOptions);
 
-  const preparedData = data.reduce((acc, item) => ({
+  const preparedData = data?.reduce((acc, item) => ({
     [item.code]: item.rates[0],
     ...acc,
   }), {});
