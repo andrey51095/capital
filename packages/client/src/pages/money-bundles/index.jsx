@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Block} from 'baseui/block';
 import {Button} from 'baseui/button';
+import {ButtonGroup} from 'baseui/button-group';
 import {toaster} from 'baseui/toast';
 
 import {
@@ -17,6 +18,7 @@ import ViewMoneyBundleModal from './view-money-bundle-modal';
 import CreateMoneyBundleModal from './create-money-bundle-modal';
 import EditDrawer from './edit-money-bundle-drawer';
 import DeleteMoneyBundleModal from './delete-money-bundle-modal';
+import FeedModalContainer from './feed-modal';
 
 const MoneyBundles = () => {
   const {moneyBundles, loading, refetch} = useMoneyBundles();
@@ -26,11 +28,15 @@ const MoneyBundles = () => {
   const [editingBundle, setEditingBundle] = useState(null);
   const [deletingBundle, setDeletingBundle] = useState(null);
   const [creatingBundle, setCreatingBundle] = useState(false);
+  const [openFeed, setOpenFeed] = useState(false);
 
   const handleRefetch = () => {
     refetch();
     summaryResult.refetch();
   };
+
+  const handleCloseFeed = () => setOpenFeed(false);
+  const handleOpenFeed = () => setOpenFeed(true);
 
   const handleCloseCreating = () => setCreatingBundle(false);
   const handleOpenCreating = () => setCreatingBundle(true);
@@ -97,9 +103,14 @@ const MoneyBundles = () => {
             <SummaryCard {...summaryResult} />
           </Block>
 
-          <Button onClick={handleOpenCreating}>
-            Create Money Bundle
-          </Button>
+          <ButtonGroup>
+            <Button onClick={handleOpenCreating}>
+              Create Money Bundle
+            </Button>
+            <Button onClick={handleOpenFeed}>
+              Open Feed
+            </Button>
+          </ButtonGroup>
         </Block>
 
         <MoneyBundleTable
@@ -144,6 +155,13 @@ const MoneyBundles = () => {
           onSubmit={deleteMoneyBundle}
           isSubmitting={isDeletingLoading}
           onClose={handleCloseDeleting}
+        />
+      )}
+
+      {openFeed && (
+        <FeedModalContainer
+          isOpen={openFeed}
+          onClose={handleCloseFeed}
         />
       )}
     </>
