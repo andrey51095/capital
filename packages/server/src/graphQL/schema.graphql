@@ -8,6 +8,7 @@ type Query {
     currency: String!
     config: [CurrencyEquivalentConfig!]!
   ): Float!
+  feed(page: Int!, perPage: Int!): FeedResult!
 }
 
 type Mutation {
@@ -72,4 +73,17 @@ input CurrencyEquivalentConfig {
 type OptionType {
   id: ID!
   label: String!
+}
+
+type FeedResult {
+  page: Int!
+  feeds: [Feed!]!
+}
+
+type Feed {
+  id: ID!
+  from: String
+  to: String
+  transferredTo: String
+  createdAt: Float!
 }

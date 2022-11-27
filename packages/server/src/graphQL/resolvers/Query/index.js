@@ -4,6 +4,7 @@ const moneySummary = require('./money-summary');
 const currencyEquivalent = require('./currency-equivalent');
 const types = require('./types');
 const moneySummaryV2 = require('./money-summary-v2');
+const feed = require('./feed');
 
 module.exports = {
   moneyBundles,
@@ -11,5 +12,6 @@ module.exports = {
   currencies,
   currencyEquivalent,
   types,
-  moneySummaryV2
+  moneySummaryV2,
+  feed
 };
