@@ -25,7 +25,7 @@ export default function SummaryInUsd({data: summary, loading: isSummaryLoading})
   const [getData, {loading, data}] = useLazyFetch(...getApilayerArgs(summaryParam));
 
   const totalValue = useMemo(() => {
-    if (!data) {
+    if (!data || !data?.source) {
       return 0;
     }
 

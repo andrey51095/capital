@@ -69,7 +69,7 @@ const EditForm = ({amount, description, id, currency, storage, allList, onSubmit
     }),
     value: values[key] && [{id: values[key]}],
   });
-  console.log(getSelectProps('type'));
+
   const getError = key => touched[key] && errors[key];
 
   const allListFilteredByCurrency = allList
