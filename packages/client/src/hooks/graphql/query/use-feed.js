@@ -1,6 +1,5 @@
 import React from 'react';
-import {useQuery} from 'react-apollo';
-import gql from 'graphql-tag';
+import {useQuery, gql} from '@apollo/client';
 
 const QUERY_FEED = gql`
   query Feed($page: Int!, $perPage: Int!) {
@@ -19,16 +18,24 @@ const QUERY_FEED = gql`
 
 const useFeed = () => {
   const [page, setPage] = React.useState(0);
-  const { data, loading, error, fetchMore } = useQuery(QUERY_FEED, {
-    variables: { page: 0, perPage: 10 },
+  const {data, loading, error, fetchMore} = useQuery(QUERY_FEED, {
+    variables: {
+      page: 0,
+      perPage: 10,
+    },
     notifyOnNetworkStatusChange: true,
   });
 
   const loadMore = () => {
     fetchMore({
-      variables: { page: page + 1, perPage: 10 },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
+      variables: {
+        page: page + 1,
+        perPage: 10,
+      },
+      updateQuery: (prev, {fetchMoreResult}) => {
+        if (!fetchMoreResult) {
+          return prev;
+        }
 
         return {
           feed: {
@@ -38,7 +45,7 @@ const useFeed = () => {
         };
       },
     });
-    setPage((prev) => prev + 1);
+    setPage(prev => prev + 1);
   };
 
   return {

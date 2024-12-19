@@ -4,7 +4,7 @@ import {FormControl} from 'baseui/form-control';
 import {Input} from 'baseui/input';
 import {Select} from 'baseui/select';
 import {Button} from 'baseui/button';
-import {useQuery} from 'react-apollo';
+import {useQuery} from '@apollo/client';
 import {Block} from 'baseui/block';
 
 import {QUERY_CURRENCIES} from '../../../gql';

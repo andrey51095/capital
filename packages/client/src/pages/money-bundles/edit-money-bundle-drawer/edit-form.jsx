@@ -26,10 +26,16 @@ const EditForm = ({amount, description, id, currency, storage, allList, onSubmit
       ...(type === 'invalid' ? {type} : {}),
     },
     onSubmit: async (values, actions) => {
-      let request = { ...values, id };
+      let request = {
+        ...values,
+        id,
+      };
 
       if (request.transfer) {
-        request.transfer = request.transfer.map(item => ({...item, type: values?.type || type}))
+        request.transfer = request.transfer.map(item => ({
+          ...item,
+          type: values?.type || type,
+        }));
       }
 
       await onSubmit(request);

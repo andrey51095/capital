@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import {gql} from '@apollo/client';
 
 export const QUERY_CURRENCIES = gql`
   query Currencies {
@@ -11,6 +11,18 @@ export const QUERY_MONEY_SUMMARY = gql`
     summary: moneySummary {
       amount
       currency
+    }
+  }
+`;
+
+export const GET_EXPENSES = gql`
+  query GetExpenses($filter: ExpenseFilter) {
+    getExpenses(filter: $filter) {
+      id
+      date
+      category
+      amount
+      description
     }
   }
 `;

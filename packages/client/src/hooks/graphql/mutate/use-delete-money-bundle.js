@@ -1,6 +1,4 @@
-// @flow
-import {useMutation} from 'react-apollo';
-import gql from 'graphql-tag';
+import {useMutation, gql} from '@apollo/client';
 
 const DELETE_MONEY_BUNDLE_MUTATION = gql`
   mutation deleteMoneyBundleMutation( $id: ID!) {

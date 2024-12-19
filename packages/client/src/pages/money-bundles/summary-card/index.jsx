@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Card, StyledBody} from 'baseui/card';
+import {StyledBody} from 'baseui/card';
+import {Block} from 'baseui/block';
 import {StyledDivider} from 'baseui/divider';
 
 import {configOptions, titleMapper} from './constants';
@@ -14,7 +15,10 @@ const SummaryCard = ({summary, loading}) => {
   let data = summary;
 
   return (
-    <Card title={titleMapper[configKey]}>
+    <Block
+      overrides={{}}
+      title={titleMapper[configKey]}
+    >
       <StyledBody>
         <CurrencyAmountRenderer
           data={data}
@@ -31,7 +35,7 @@ const SummaryCard = ({summary, loading}) => {
           loading={loading}
         />
       </StyledBody>
-    </Card>
+    </Block>
   );
 };
 export default SummaryCard;

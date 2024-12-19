@@ -3,15 +3,16 @@ import {Block} from 'baseui/block';
 
 import {FeedItem} from './FeedItem';
 
-
-const JsonRender = ({ title, json }) => {
-  if (!json) return null; 
+const JsonRender = ({title, json}) => {
+  if (!json) {
+    return null;
+  }
 
   let parsedData;
   try {
     parsedData = JSON.parse(json);
   } catch (e) {
-    console.error("Invalid JSON:", json);
+    console.error('Invalid JSON:', json);
     return null;
   }
 
@@ -26,7 +27,8 @@ const JsonRender = ({ title, json }) => {
         fontWeight="bold"
         color="contentPrimary"
       >
-        {title}:
+        {title}
+        :
       </Block>
       <Block>
         <FeedItem {...parsedData} />
@@ -35,9 +37,8 @@ const JsonRender = ({ title, json }) => {
   );
 };
 
-
-const Feed = ({ createdAt, to, from }) => {
-  const isEdited = from && to; 
+const Feed = ({createdAt, to, from}) => {
+  const isEdited = from && to;
 
   return (
     <Block
@@ -51,25 +52,39 @@ const Feed = ({ createdAt, to, from }) => {
         justifyContent="space-between"
         marginBottom="scale200"
       >
-        <Block fontWeight="bold" fontSize="14px">
-          {isEdited ? "Updated" : "Created"}
+        <Block
+          fontWeight="bold"
+          fontSize="14px"
+        >
+          {isEdited ? 'Updated' : 'Created'}
         </Block>
-        <Block fontSize="12px" color="contentSecondary">
+        <Block
+          fontSize="12px"
+          color="contentSecondary"
+        >
           {new Date(createdAt * 1000).toLocaleString()}
         </Block>
       </Block>
 
       {isEdited ? (
         <>
-          <JsonRender title="Old" json={from} />
-          <JsonRender title="New" json={to} />
+          <JsonRender
+            title="Old"
+            json={from}
+          />
+          <JsonRender
+            title="New"
+            json={to}
+          />
         </>
       ) : (
-        <JsonRender title="New" json={to} />
+        <JsonRender
+          title="New"
+          json={to}
+        />
       )}
     </Block>
   );
 };
-
 
 export default Feed;

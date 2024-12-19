@@ -5,7 +5,6 @@ import {FormControl} from 'baseui/form-control';
 import {Input} from 'baseui/input';
 import {Select} from 'baseui/select';
 import {Button, KIND, SHAPE, SIZE} from 'baseui/button';
-import {Card} from 'baseui/card';
 import {get} from 'lodash';
 
 import {Plus, XMark} from '../../../icons';
@@ -46,7 +45,7 @@ const TransferBundles = ({values, getError, optionsTransferTo, getCommonProps}) 
             }
           };
           return (
-            <Card
+            <Block
               key={i}
               overrides={{Root: {style: {position: 'relative'}}}}
             >
@@ -134,7 +133,7 @@ const TransferBundles = ({values, getError, optionsTransferTo, getCommonProps}) 
               >
                 <XMark />
               </Button>
-            </Card>
+            </Block>
           );
         })}
 

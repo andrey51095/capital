@@ -6,13 +6,18 @@ import FeedModal from './feed-modal';
 import Feed from './feed';
 
 const FeedModalContainer = ({isOpen, onClose}) => {
-  const { feed, loading, loadMore } = useFeed();
+  const {feed, loading, loadMore} = useFeed();
 
   return (
     <FeedModal
       isOpen={isOpen}
       onClose={onClose}
-      feed={feed?.map((f) => <Feed key={f.id} {...f} />)}
+      feed={feed?.map(f => (
+        <Feed
+          key={f.id}
+          {...f}
+        />
+      ))}
       loading={loading}
       loadMore={loadMore}
     />

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import {gql} from '@apollo/client';
 
 export const UPDATE_MONEY_BUNDLE_MUTATION = gql`
   mutation updateMoneyBundle(
@@ -28,5 +28,23 @@ export const UPDATE_MONEY_BUNDLE_MUTATION = gql`
 export const BACKUP_MUTATION = gql`
   mutation Backup{
     backup
+  }
+`;
+
+export const CREATE_EXPENSE = gql`
+  mutation CreateExpense($input: ExpenseInput!) {
+    createExpense(input: $input) {
+      id
+      date
+      category
+      amount
+      description
+    }
+  }
+`;
+
+export const DELETE_EXPENSE = gql`
+  mutation DeleteExpense($id: ID!) {
+    deleteExpense(id: $id)
   }
 `;

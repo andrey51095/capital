@@ -11,7 +11,7 @@ import {
 import {FormControl} from 'baseui/form-control';
 import {Input} from 'baseui/input';
 import {toaster} from 'baseui/toast';
-import {useMutation} from 'react-apollo';
+import {useMutation} from '@apollo/client';
 
 import {BACKUP_MUTATION} from '../../../gql';
 

@@ -3,6 +3,8 @@ import {Routes, Route, Navigate} from 'react-router-dom';
 import {Block} from 'baseui/block';
 
 import MoneyBundles from '../pages/money-bundles';
+import InvestmentCalculator from '../pages/investment-calculator';
+import Expenses from '../pages/expenses';
 import {routes} from '../constants';
 
 const RootRoutes = () => (
@@ -26,6 +28,14 @@ const RootRoutes = () => (
           element={<MoneyBundles />}
         />
       </Route>
+      <Route
+        path={routes.investmentCalculator}
+        element={<InvestmentCalculator />}
+      />
+      <Route
+        path={routes.expenses}
+        element={<Expenses />}
+      />
     </Routes>
   </Block>
 );

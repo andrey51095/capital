@@ -1,7 +1,5 @@
-// @flow
 import {useMemo} from 'react';
-import {useQuery} from 'react-apollo';
-import gql from 'graphql-tag';
+import {useQuery, gql} from '@apollo/client';
 
 const QUERY_MONEY_BUNDLES = gql`
   query MoneyBundles {
