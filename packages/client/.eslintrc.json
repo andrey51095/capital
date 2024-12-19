@@ -25,7 +25,7 @@
         "baseui"
     ],
     "rules": {
-        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
         "curly": "error",
         "indent": [2, 2],
         "semi": [2, "always"],
@@ -36,7 +36,7 @@
         "block-spacing": ["error", "never"],
         "max-statements-per-line": ["error", { "max": 1 }],
         "object-curly-spacing": ["error", "never"],
-        "object-property-newline": "error",
+        "object-property-newline": "warn",
         "object-curly-newline": ["error", { "multiline": true }],
         "array-bracket-spacing": ["error", "never"],
         "array-element-newline": ["error", { "minItems": 4 }],
@@ -113,6 +113,7 @@
         "import/no-webpack-loader-syntax": "error",
         "import/no-unassigned-import": "off",
         "import/no-named-default": "error",
+        "react/display-name": "off",
         "import/no-anonymous-default-export": "off",
         "import/exports-last": "off",
         "baseui/deprecated-theme-api": "warn",
@@ -124,6 +125,10 @@
           "node": {
             "extensions": [".js",".jsx"]
           }
+        },
+        "react" :{
+            "version": "detect"
         }
     }
+  
 }
