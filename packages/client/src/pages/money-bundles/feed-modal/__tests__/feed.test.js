@@ -1,11 +1,16 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 import Feed from '../feed'; // Adjust import based on the file structure
-import { FeedItem } from '../FeedItem'; // Assuming FeedItem is imported from the correct path
+import {FeedItem} from '../FeedItem'; // Assuming FeedItem is imported from the correct path
 
 // Mock FeedItem to avoid testing its internals
 jest.mock('../FeedItem', () => ({
-  FeedItem: ({ ...props }) => <div data-testid="feed-item" {...props}></div>,
+  FeedItem: ({...props}) => (
+    <div
+      data-testid="feed-item"
+      {...props}
+    />
+  ),
 }));
 
 describe('Feed Component', () => {
@@ -15,7 +20,11 @@ describe('Feed Component', () => {
 
   it('renders correctly when the feed is created (no "from" and "to" JSON)', () => {
     render(
-      <Feed createdAt={mockCreatedAt} from={null} to={mockToJson} />
+      <Feed
+        createdAt={mockCreatedAt}
+        from={null}
+        to={mockToJson}
+      />
     );
 
     // Check if the creation text appears correctly
@@ -31,7 +40,11 @@ describe('Feed Component', () => {
 
   it('renders correctly when the feed is updated (has both "from" and "to" JSON)', () => {
     render(
-      <Feed createdAt={mockCreatedAt} from={mockFromJson} to={mockToJson} />
+      <Feed
+        createdAt={mockCreatedAt}
+        from={mockFromJson}
+        to={mockToJson}
+      />
     );
 
     // Check if the updated text appears correctly
@@ -50,7 +63,11 @@ describe('Feed Component', () => {
     const invalidJson = '{"id": 1, "name": "Invalid Item"'; // Missing closing brace
 
     render(
-      <Feed createdAt={mockCreatedAt} from={invalidJson} to={mockToJson} />
+      <Feed
+        createdAt={mockCreatedAt}
+        from={invalidJson}
+        to={mockToJson}
+      />
     );
 
     // Check if the invalid JSON does not render the "Old" item
@@ -60,7 +77,11 @@ describe('Feed Component', () => {
 
   it('renders nothing if no "to" JSON is provided', () => {
     render(
-      <Feed createdAt={mockCreatedAt} from={mockFromJson} to={null} />
+      <Feed
+        createdAt={mockCreatedAt}
+        from={mockFromJson}
+        to={null}
+      />
     );
 
     // "New" content should not render if "to" is null
@@ -74,7 +95,11 @@ describe('Feed Component', () => {
     const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     render(
-      <Feed createdAt={mockCreatedAt} from={invalidJson} to={mockToJson} />
+      <Feed
+        createdAt={mockCreatedAt}
+        from={invalidJson}
+        to={mockToJson}
+      />
     );
 
     expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
@@ -90,7 +115,11 @@ describe('Feed Component', () => {
 
   it('correctly formats the created date', () => {
     render(
-      <Feed createdAt={mockCreatedAt} from={null} to={mockToJson} />
+      <Feed
+        createdAt={mockCreatedAt}
+        from={null}
+        to={mockToJson}
+      />
     );
 
     const date = new Date(mockCreatedAt * 1000).toLocaleString();

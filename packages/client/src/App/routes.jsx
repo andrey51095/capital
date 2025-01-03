@@ -5,6 +5,8 @@ import {Block} from 'baseui/block';
 import MoneyBundles from '../pages/money-bundles';
 import InvestmentCalculator from '../pages/investment-calculator';
 import Expenses from '../pages/expenses';
+import Income from '../pages/income';
+import RegisterForm from '../pages/user-registration';
 import {routes} from '../constants';
 
 const RootRoutes = () => (
@@ -16,7 +18,7 @@ const RootRoutes = () => (
     <Routes>
       <Route
         path={routes.root}
-        element={<Navigate to={routes.capital} />}
+        element={<RegisterForm />}
       />
 
       <Route
@@ -35,6 +37,10 @@ const RootRoutes = () => (
       <Route
         path={routes.expenses}
         element={<Expenses />}
+      />
+      <Route
+        path={routes.income}
+        element={<Income />}
       />
     </Routes>
   </Block>

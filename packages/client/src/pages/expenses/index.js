@@ -33,7 +33,13 @@ const ExpensesPage = () => {
   };
 
   return (
-    <Block padding="scale800">
+    <Block
+      padding="scale800"
+      height="100%"
+      width="100%"
+      display="flex"
+      flexDirection="column"
+    >
       <h1>Expense Manager</h1>
 
       <ExpenseFilter onFilterChange={setFilters} />

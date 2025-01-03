@@ -26,3 +26,15 @@ export const GET_EXPENSES = gql`
     }
   }
 `;
+
+export const GET_INCOMES = gql`
+  query GetIncomes($filter: IncomeFilterInput) {
+    getIncomes(filter: $filter) {
+      id
+      date
+      amount
+      category
+      description
+    }
+  }
+`;

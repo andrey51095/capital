@@ -1,13 +1,11 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
-import { Formik } from 'formik';
+import {render, fireEvent, screen, waitFor} from '@testing-library/react';
+import {Formik} from 'formik';
 import EditForm from '../EditForm'; // Adjust import path as needed
-import { useBundleTypesOptions } from '../../../hooks/graphql';
+import {useBundleTypesOptions} from '../../../hooks/graphql';
 
 // Mocking the custom hook for testing
-jest.mock('../../../hooks/graphql', () => ({
-  useBundleTypesOptions: jest.fn(),
-}));
+jest.mock('../../../hooks/graphql', () => ({useBundleTypesOptions: jest.fn()}));
 
 describe('EditForm', () => {
   const mockOnSubmit = jest.fn();
@@ -15,15 +13,36 @@ describe('EditForm', () => {
 
   beforeEach(() => {
     mockUseBundleTypesOptions.mockReturnValue({
-      typesOptions: [{ id: '1', label: 'Type 1' }, { id: '2', label: 'Type 2' }],
+      typesOptions: [
+        {
+          id: '1',
+          label: 'Type 1',
+        }, {
+          id: '2',
+          label: 'Type 2',
+        },
+      ],
       loading: false,
     });
   });
 
   it('renders the form correctly with initial values', () => {
     render(
-      <Formik initialValues={{ amount: 100, description: '', storage: '', transfer: [], currency: 'USD', type: '' }} onSubmit={mockOnSubmit}>
-        <EditForm allList={[]} onSubmit={mockOnSubmit} />
+      <Formik
+        initialValues={{
+          amount: 100,
+          description: '',
+          storage: '',
+          transfer: [],
+          currency: 'USD',
+          type: '',
+        }}
+        onSubmit={mockOnSubmit}
+      >
+        <EditForm
+          allList={[]}
+          onSubmit={mockOnSubmit}
+        />
       </Formik>
     );
 
@@ -34,24 +53,49 @@ describe('EditForm', () => {
   });
 
   it('shows the correct error message when validation fails', async () => {
-    const initialValues = { amount: 100, description: '', storage: '', transfer: [], currency: 'USD' };
+    const initialValues = {
+      amount: 100,
+      description: '',
+      storage: '',
+      transfer: [],
+      currency: 'USD',
+    };
     render(
-      <Formik initialValues={initialValues} onSubmit={mockOnSubmit}>
-        <EditForm allList={[]} onSubmit={mockOnSubmit} />
+      <Formik
+        initialValues={initialValues}
+        onSubmit={mockOnSubmit}
+      >
+        <EditForm
+          allList={[]}
+          onSubmit={mockOnSubmit}
+        />
       </Formik>
     );
 
-    fireEvent.change(screen.getByLabelText(/Amount/i), { target: { value: '' } });
+    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: ''}});
     fireEvent.blur(screen.getByLabelText(/Amount/i));
 
     await waitFor(() => expect(screen.getByText(/Amount is required/)).toBeInTheDocument());
   });
 
   it('correctly handles the form submission with valid data', async () => {
-    const initialValues = { amount: 100, description: 'Test description', storage: 'Test storage', transfer: [], currency: 'USD', type: '1' };
+    const initialValues = {
+      amount: 100,
+      description: 'Test description',
+      storage: 'Test storage',
+      transfer: [],
+      currency: 'USD',
+      type: '1',
+    };
     render(
-      <Formik initialValues={initialValues} onSubmit={mockOnSubmit}>
-        <EditForm allList={[]} onSubmit={mockOnSubmit} />
+      <Formik
+        initialValues={initialValues}
+        onSubmit={mockOnSubmit}
+      >
+        <EditForm
+          allList={[]}
+          onSubmit={mockOnSubmit}
+        />
       </Formik>
     );
 
@@ -65,33 +109,68 @@ describe('EditForm', () => {
   });
 
   it('disables submit button if there are errors or the form is unchanged', () => {
-    const initialValues = { amount: 100, description: '', storage: '', transfer: [], currency: 'USD' };
+    const initialValues = {
+      amount: 100,
+      description: '',
+      storage: '',
+      transfer: [],
+      currency: 'USD',
+    };
     render(
-      <Formik initialValues={initialValues} onSubmit={mockOnSubmit}>
-        <EditForm allList={[]} onSubmit={mockOnSubmit} />
+      <Formik
+        initialValues={initialValues}
+        onSubmit={mockOnSubmit}
+      >
+        <EditForm
+          allList={[]}
+          onSubmit={mockOnSubmit}
+        />
       </Formik>
     );
 
     const submitButton = screen.getByText(/Submit/i);
     expect(submitButton).toBeDisabled();
 
-    fireEvent.change(screen.getByLabelText(/Amount/i), { target: { value: '150' } });
+    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: '150'}});
     expect(submitButton).toBeEnabled();
 
-    fireEvent.change(screen.getByLabelText(/Amount/i), { target: { value: '' } });
+    fireEvent.change(screen.getByLabelText(/Amount/i), {target: {value: ''}});
     expect(submitButton).toBeDisabled();
   });
 
   it('renders transfer bundles correctly', () => {
     const allList = [
-      { id: '1', currency: 'USD', amount: 100, description: 'Bundle 1', storage: 'Storage 1' },
-      { id: '2', currency: 'USD', amount: 200, description: 'Bundle 2', storage: 'Storage 2' },
+      {
+        id: '1',
+        currency: 'USD',
+        amount: 100,
+        description: 'Bundle 1',
+        storage: 'Storage 1',
+      }, {
+        id: '2',
+        currency: 'USD',
+        amount: 200,
+        description: 'Bundle 2',
+        storage: 'Storage 2',
+      },
     ];
-    const initialValues = { amount: 100, description: '', storage: '', transfer: [], currency: 'USD' };
+    const initialValues = {
+      amount: 100,
+      description: '',
+      storage: '',
+      transfer: [],
+      currency: 'USD',
+    };
 
     render(
-      <Formik initialValues={initialValues} onSubmit={mockOnSubmit}>
-        <EditForm allList={allList} onSubmit={mockOnSubmit} />
+      <Formik
+        initialValues={initialValues}
+        onSubmit={mockOnSubmit}
+      >
+        <EditForm
+          allList={allList}
+          onSubmit={mockOnSubmit}
+        />
       </Formik>
     );
 
@@ -100,11 +179,26 @@ describe('EditForm', () => {
   });
 
   it('renders loading state for types options', () => {
-    mockUseBundleTypesOptions.mockReturnValue({ typesOptions: [], loading: true });
+    mockUseBundleTypesOptions.mockReturnValue({
+      typesOptions: [],
+      loading: true,
+    });
 
     render(
-      <Formik initialValues={{ amount: 100, description: '', storage: '', transfer: [], currency: 'USD' }} onSubmit={mockOnSubmit}>
-        <EditForm allList={[]} onSubmit={mockOnSubmit} />
+      <Formik
+        initialValues={{
+          amount: 100,
+          description: '',
+          storage: '',
+          transfer: [],
+          currency: 'USD',
+        }}
+        onSubmit={mockOnSubmit}
+      >
+        <EditForm
+          allList={[]}
+          onSubmit={mockOnSubmit}
+        />
       </Formik>
     );
 

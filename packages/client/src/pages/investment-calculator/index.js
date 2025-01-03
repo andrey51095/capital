@@ -85,6 +85,8 @@ const InvestmentCalculator = () => {
       display="flex"
       flexDirection="column"
       gridGap="scale600"
+      height="100%"
+      width="100%"
     >
       <h1>Investment Calculator</h1>
 

@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import {render, fireEvent, screen, waitFor} from '@testing-library/react';
 import InvestmentCalculator from '../InvestmentCalculator';
 
 describe('InvestmentCalculator Component', () => {
@@ -17,10 +17,10 @@ describe('InvestmentCalculator Component', () => {
 
   it('should update state when input fields change', () => {
     // Simulate input change
-    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), { target: { value: '10000' } });
-    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), { target: { value: '5' } });
-    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), { target: { value: '200' } });
-    fireEvent.change(screen.getByPlaceholderText('Number of Years'), { target: { value: '10' } });
+    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), {target: {value: '10000'}});
+    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), {target: {value: '5'}});
+    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), {target: {value: '200'}});
+    fireEvent.change(screen.getByPlaceholderText('Number of Years'), {target: {value: '10'}});
 
     // Assert that the values have changed
     expect(screen.getByPlaceholderText('Initial Investment ($)').value).toBe('10000');
@@ -31,10 +31,10 @@ describe('InvestmentCalculator Component', () => {
 
   it('should calculate investment values correctly', async () => {
     // Simulate input
-    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), { target: { value: '10000' } });
-    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), { target: { value: '5' } });
-    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), { target: { value: '200' } });
-    fireEvent.change(screen.getByPlaceholderText('Number of Years'), { target: { value: '10' } });
+    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), {target: {value: '10000'}});
+    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), {target: {value: '5'}});
+    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), {target: {value: '200'}});
+    fireEvent.change(screen.getByPlaceholderText('Number of Years'), {target: {value: '10'}});
 
     // Click calculate button
     fireEvent.click(screen.getByText('Calculate'));
@@ -49,10 +49,10 @@ describe('InvestmentCalculator Component', () => {
 
   it('should calculate with reinvest checked', async () => {
     // Simulate input
-    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), { target: { value: '10000' } });
-    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), { target: { value: '5' } });
-    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), { target: { value: '200' } });
-    fireEvent.change(screen.getByPlaceholderText('Number of Years'), { target: { value: '10' } });
+    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), {target: {value: '10000'}});
+    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), {target: {value: '5'}});
+    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), {target: {value: '200'}});
+    fireEvent.change(screen.getByPlaceholderText('Number of Years'), {target: {value: '10'}});
 
     // Check reinvest checkbox
     fireEvent.click(screen.getByLabelText('Reinvest Returns'));
@@ -70,10 +70,10 @@ describe('InvestmentCalculator Component', () => {
 
   it('should render the pie chart correctly after calculation', async () => {
     // Simulate input
-    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), { target: { value: '10000' } });
-    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), { target: { value: '5' } });
-    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), { target: { value: '200' } });
-    fireEvent.change(screen.getByPlaceholderText('Number of Years'), { target: { value: '10' } });
+    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), {target: {value: '10000'}});
+    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), {target: {value: '5'}});
+    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), {target: {value: '200'}});
+    fireEvent.change(screen.getByPlaceholderText('Number of Years'), {target: {value: '10'}});
 
     // Click calculate button
     fireEvent.click(screen.getByText('Calculate'));
@@ -87,10 +87,10 @@ describe('InvestmentCalculator Component', () => {
 
   it('should render the line chart correctly after calculation', async () => {
     // Simulate input
-    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), { target: { value: '10000' } });
-    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), { target: { value: '5' } });
-    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), { target: { value: '200' } });
-    fireEvent.change(screen.getByPlaceholderText('Number of Years'), { target: { value: '10' } });
+    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), {target: {value: '10000'}});
+    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), {target: {value: '5'}});
+    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), {target: {value: '200'}});
+    fireEvent.change(screen.getByPlaceholderText('Number of Years'), {target: {value: '10'}});
 
     // Click calculate button
     fireEvent.click(screen.getByText('Calculate'));
@@ -104,10 +104,10 @@ describe('InvestmentCalculator Component', () => {
 
   it('should render the table correctly after calculation', async () => {
     // Simulate input
-    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), { target: { value: '10000' } });
-    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), { target: { value: '5' } });
-    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), { target: { value: '200' } });
-    fireEvent.change(screen.getByPlaceholderText('Number of Years'), { target: { value: '10' } });
+    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), {target: {value: '10000'}});
+    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), {target: {value: '5'}});
+    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), {target: {value: '200'}});
+    fireEvent.change(screen.getByPlaceholderText('Number of Years'), {target: {value: '10'}});
 
     // Click calculate button
     fireEvent.click(screen.getByText('Calculate'));
@@ -121,10 +121,10 @@ describe('InvestmentCalculator Component', () => {
 
   it('should show error when invalid input is provided', async () => {
     // Simulate invalid input
-    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), { target: { value: '' } });
-    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), { target: { value: '5' } });
-    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), { target: { value: '200' } });
-    fireEvent.change(screen.getByPlaceholderText('Number of Years'), { target: { value: '' } });
+    fireEvent.change(screen.getByPlaceholderText('Initial Investment ($)'), {target: {value: ''}});
+    fireEvent.change(screen.getByPlaceholderText('Annual Rate of Return (%)'), {target: {value: '5'}});
+    fireEvent.change(screen.getByPlaceholderText('Monthly Contribution ($, optional)'), {target: {value: '200'}});
+    fireEvent.change(screen.getByPlaceholderText('Number of Years'), {target: {value: ''}});
 
     // Click calculate button
     fireEvent.click(screen.getByText('Calculate'));

@@ -43,7 +43,10 @@ describe('Header component', () => {
   });
 
   it('should handle empty storage correctly', () => {
-    const propsWithEmptyStorage = { ...mockProps, storage: '' };
+    const propsWithEmptyStorage = {
+      ...mockProps,
+      storage: '',
+    };
     render(<Header {...propsWithEmptyStorage} />);
 
     expect(screen.queryByText('')).toBeNull();
@@ -52,7 +55,10 @@ describe('Header component', () => {
   });
 
   it('should render currency component when currency is passed', () => {
-    const propsWithDifferentCurrency = { ...mockProps, currency: 'EUR' };
+    const propsWithDifferentCurrency = {
+      ...mockProps,
+      currency: 'EUR',
+    };
     render(<Header {...propsWithDifferentCurrency} />);
 
     expect(screen.getByText('Currency Component')).toBeInTheDocument();

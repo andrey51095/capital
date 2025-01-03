@@ -9,6 +9,7 @@ import {useLazyFetch} from '../../../hooks';
 const USD = 'USD';
 const getApilayerArgs = currencies => {
   let myHeaders = new Headers();
+  console.log({env: process.env});
   myHeaders.append('apikey', process.env.REACT_APP_APILAYER_KEY);
   let requestOptions = {
     method: 'GET',

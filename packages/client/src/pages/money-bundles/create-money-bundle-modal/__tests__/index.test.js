@@ -1,11 +1,11 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
-import { Formik } from 'formik';
+import {render, fireEvent, screen, waitFor} from '@testing-library/react';
+import {MockedProvider} from '@apollo/client/testing';
+import {Formik} from 'formik';
 import CreateMoneyBundleModal from '../CreateMoneyBundleModal'; // Adjust import path as needed
-import { initialForm } from '../constants'; // Adjust import path as needed
+import {initialForm} from '../constants'; // Adjust import path as needed
 import MoneyBundleForm from '../form'; // Adjust import path as needed
-import { validationSchema } from '../validation'; // Adjust import path as needed
+import {validationSchema} from '../validation'; // Adjust import path as needed
 
 // Mock the onSubmit function
 const mockOnSubmit = jest.fn();
@@ -72,33 +72,23 @@ describe('CreateMoneyBundleModal', () => {
     await waitFor(() => screen.getByLabelText('Amount *'));
 
     // Simulate input change for 'Amount'
-    fireEvent.change(screen.getByLabelText('Amount *'), {
-      target: { value: '1000' },
-    });
+    fireEvent.change(screen.getByLabelText('Amount *'), {target: {value: '1000'}});
     expect(screen.getByLabelText('Amount *')).toHaveValue('1000');
 
     // Simulate input change for 'Currency'
-    fireEvent.change(screen.getByLabelText('Currency *'), {
-      target: { value: 'USD' },
-    });
+    fireEvent.change(screen.getByLabelText('Currency *'), {target: {value: 'USD'}});
     expect(screen.getByLabelText('Currency *')).toHaveValue('USD');
 
     // Simulate input change for 'Type'
-    fireEvent.change(screen.getByLabelText('Type *'), {
-      target: { value: 'Type 1' },
-    });
+    fireEvent.change(screen.getByLabelText('Type *'), {target: {value: 'Type 1'}});
     expect(screen.getByLabelText('Type *')).toHaveValue('Type 1');
 
     // Simulate input change for 'Storage'
-    fireEvent.change(screen.getByLabelText('Storage *'), {
-      target: { value: 'Storage 1' },
-    });
+    fireEvent.change(screen.getByLabelText('Storage *'), {target: {value: 'Storage 1'}});
     expect(screen.getByLabelText('Storage *')).toHaveValue('Storage 1');
 
     // Simulate input change for 'Description'
-    fireEvent.change(screen.getByLabelText('Description'), {
-      target: { value: 'Test Description' },
-    });
+    fireEvent.change(screen.getByLabelText('Description'), {target: {value: 'Test Description'}});
     expect(screen.getByLabelText('Description')).toHaveValue('Test Description');
   });
 
@@ -140,21 +130,11 @@ describe('CreateMoneyBundleModal', () => {
     await waitFor(() => screen.getByLabelText('Amount *'));
 
     // Fill in the form fields
-    fireEvent.change(screen.getByLabelText('Amount *'), {
-      target: { value: '1000' },
-    });
-    fireEvent.change(screen.getByLabelText('Currency *'), {
-      target: { value: 'USD' },
-    });
-    fireEvent.change(screen.getByLabelText('Type *'), {
-      target: { value: 'Type 1' },
-    });
-    fireEvent.change(screen.getByLabelText('Storage *'), {
-      target: { value: 'Storage 1' },
-    });
-    fireEvent.change(screen.getByLabelText('Description'), {
-      target: { value: 'Test Description' },
-    });
+    fireEvent.change(screen.getByLabelText('Amount *'), {target: {value: '1000'}});
+    fireEvent.change(screen.getByLabelText('Currency *'), {target: {value: 'USD'}});
+    fireEvent.change(screen.getByLabelText('Type *'), {target: {value: 'Type 1'}});
+    fireEvent.change(screen.getByLabelText('Storage *'), {target: {value: 'Storage 1'}});
+    fireEvent.change(screen.getByLabelText('Description'), {target: {value: 'Test Description'}});
 
     // Submit the form
     fireEvent.click(screen.getByText('Submit'));

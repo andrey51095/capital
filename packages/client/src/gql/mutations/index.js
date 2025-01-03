@@ -48,3 +48,30 @@ export const DELETE_EXPENSE = gql`
     deleteExpense(id: $id)
   }
 `;
+
+export const ADD_INCOME = gql`
+  mutation AddIncome($input: AddIncomeInput!) {
+    addIncome(input: $input) {
+      id
+      date
+      amount
+      category
+      description
+    }
+  }
+`;
+
+export const DELETE_INCOME = gql`
+  mutation DeleteIncome($id: ID!) {
+    deleteIncome(id: $id)
+  }
+`;
+
+export const REGISTER_USER = gql`
+  mutation RegisterUser($input: RegisterUserInput!) {
+    registerUser(input: $input) {
+      id
+      username
+    }
+  }
+`;

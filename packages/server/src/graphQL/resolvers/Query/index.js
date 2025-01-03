@@ -6,6 +6,7 @@ const types = require('./types');
 const moneySummaryV2 = require('./money-summary-v2');
 const feed = require('./feed');
 const getExpenses = require('./getExpenses');
+const getIncomes = require('./getIncomes');
 
 module.exports = {
   moneyBundles,
@@ -15,5 +16,6 @@ module.exports = {
   types,
   moneySummaryV2,
   feed,
-  getExpenses
+  getExpenses,
+  getIncomes,
 };

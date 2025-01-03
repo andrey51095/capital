@@ -1,12 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import SummaryCard from '../SummaryCard'; // Adjust import based on the file structure
-import { CurrencyAmountRenderer } from './currency-amount'; // Adjust import based on the file structure
+import {CurrencyAmountRenderer} from './currency-amount'; // Adjust import based on the file structure
 import SummaryInPln from './summary-in-pln'; // Adjust import based on the file structure
 import SummaryInUsd from './summary-in-usd'; // Adjust import based on the file structure
 
 jest.mock('./currency-amount', () => ({
-  CurrencyAmountRenderer: ({ data, loading }) => (
+  CurrencyAmountRenderer: ({data, loading}) => (
     <div data-testid="currency-amount">
       {loading ? 'Loading Currency Amount' : `Currency Amount: ${data.length} items`}
     </div>
@@ -14,7 +14,7 @@ jest.mock('./currency-amount', () => ({
 }));
 
 jest.mock('./summary-in-pln', () => ({
-  SummaryInPln: ({ data, loading }) => (
+  SummaryInPln: ({data, loading}) => (
     <div data-testid="summary-in-pln">
       {loading ? 'Loading PLN Summary' : `PLN Summary: ${data.length} items`}
     </div>
@@ -22,7 +22,7 @@ jest.mock('./summary-in-pln', () => ({
 }));
 
 jest.mock('./summary-in-usd', () => ({
-  SummaryInUsd: ({ data, loading }) => (
+  SummaryInUsd: ({data, loading}) => (
     <div data-testid="summary-in-usd">
       {loading ? 'Loading USD Summary' : `USD Summary: ${data.length} items`}
     </div>
@@ -30,11 +30,22 @@ jest.mock('./summary-in-usd', () => ({
 }));
 
 describe('SummaryCard Component', () => {
-  const mockSummary = [{ amount: 100, currency: 'USD' }, { amount: 50, currency: 'PLN' }];
+  const mockSummary = [
+    {
+      amount: 100,
+      currency: 'USD',
+    }, {
+      amount: 50,
+      currency: 'PLN',
+    },
+  ];
   const mockEmptySummary = [];
 
   it('displays loading state correctly', () => {
-    render(<SummaryCard summary={mockSummary} loading={true} />);
+    render(<SummaryCard
+      summary={mockSummary}
+      loading={true}
+           />);
 
     // Check if the loading messages are displayed for all components
     expect(screen.getByText('Loading Currency Amount')).toBeInTheDocument();
@@ -43,7 +54,10 @@ describe('SummaryCard Component', () => {
   });
 
   it('renders summary data when loading is false', () => {
-    render(<SummaryCard summary={mockSummary} loading={false} />);
+    render(<SummaryCard
+      summary={mockSummary}
+      loading={false}
+           />);
 
     // Check if the correct data is displayed
     expect(screen.getByText('Currency Amount: 2 items')).toBeInTheDocument();
@@ -52,7 +66,10 @@ describe('SummaryCard Component', () => {
   });
 
   it('handles empty summary data correctly', () => {
-    render(<SummaryCard summary={mockEmptySummary} loading={false} />);
+    render(<SummaryCard
+      summary={mockEmptySummary}
+      loading={false}
+           />);
 
     // Check that it handles an empty summary correctly
     expect(screen.getByText('Currency Amount: 0 items')).toBeInTheDocument();
@@ -61,7 +78,10 @@ describe('SummaryCard Component', () => {
   });
 
   it('displays the correct title based on configKey', () => {
-    render(<SummaryCard summary={mockSummary} loading={false} />);
+    render(<SummaryCard
+      summary={mockSummary}
+      loading={false}
+           />);
 
     // Assuming the title is set based on configKey
     expect(screen.getByText('Config Title')).toBeInTheDocument();

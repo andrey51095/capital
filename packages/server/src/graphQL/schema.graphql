@@ -10,6 +10,7 @@ type Query {
   ): Float!
   feed(page: Int!, perPage: Int!): FeedResult!
   getExpenses(filter: ExpenseFilter): [Expense!]!
+  getIncomes(filter: IncomeFilterInput): [Income!]!
 }
 
 type Mutation {
@@ -34,7 +35,41 @@ type Mutation {
   populate(data: String!): Boolean!
   createExpense(input: ExpenseInput!): Expense!
   deleteExpense(id: ID!): Boolean!
+  addIncome(input: AddIncomeInput!): Income!
+  deleteIncome(id: ID!): Boolean!
+  registerUser(input: RegisterUserInput!): User!
 }
+
+type User {
+    id: ID!
+    username: String!
+  }
+
+  input RegisterUserInput {
+    username: String!
+    password: String!
+  }
+  
+type Income {
+    id: ID!
+    date: String!
+    amount: Float!
+    category: String!
+    description: String
+  }
+
+  input IncomeFilterInput {
+    fromDate: String
+    toDate: String
+    categories: [String]
+  }
+
+  input AddIncomeInput {
+    date: String!
+    amount: Float!
+    category: String!
+    description: String
+  }
 
 type MoneyBundle {
   id: ID!

@@ -7,6 +7,8 @@ services:
     expose:
       - ${APP_CLIENT_PORT}
     environment:
+      - REACT_APP_SERVER_PORT=${APP_SERVER_PORT}
+      - REACT_APP_MACHINE_IP=${MACHINE_IP}
       - PORT=${APP_CLIENT_PORT}
       - REACT_APP_APILAYER_KEY=${REACT_APP_APILAYER_KEY}
     ports:
@@ -16,6 +18,8 @@ services:
       - ./packages/client/src:/home/app/src
     links:
       - server
+    networks:
+      - app_network
 
   server:
     container_name: server
@@ -34,6 +38,8 @@ services:
       - mongo
     volumes:
       - ./packages/server/src:/home/app/src
+    networks:
+      - app_network
 
   mongo:
     container_name: mongoDB
@@ -42,6 +48,12 @@ services:
       - ${DATABASE_PORT}:${DATABASE_PORT}
     volumes:
       - mongo:/data/db
+    networks:
+      - app_network
 
 volumes:
   mongo:
+
+networks:
+  app_network:
+    driver: bridge

@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import MoneyBundles from './MoneyBundles';
-import { useMoneyBundles, useCreateMoneyBundle, useDeleteMoneyBundle, useUpdateMoneyBundle, useMoneySummary } from '../../hooks/graphql';
-import { toaster } from 'baseui/toast';
+import {useMoneyBundles, useCreateMoneyBundle, useDeleteMoneyBundle, useUpdateMoneyBundle, useMoneySummary} from '../../hooks/graphql';
+import {toaster} from 'baseui/toast';
 
 jest.mock('../../hooks/graphql', () => ({
   useMoneyBundles: jest.fn(),
@@ -21,8 +21,25 @@ jest.mock('baseui/toast', () => ({
 
 describe('MoneyBundles', () => {
   const mockMoneyBundles = [
-    { id: 1, storage: 'Cash', amount: 1000, currency: 'USD', type: 'Deposit', description: 'Test Description', createdAt: '2023-01-01', updatedAt: '2023-01-02' },
-    { id: 2, storage: 'Bank', amount: 2000, currency: 'EUR', type: 'Withdrawal', description: 'Test Description 2', createdAt: '2023-02-01', updatedAt: '2023-02-02' },
+    {
+      id: 1,
+      storage: 'Cash',
+      amount: 1000,
+      currency: 'USD',
+      type: 'Deposit',
+      description: 'Test Description',
+      createdAt: '2023-01-01',
+      updatedAt: '2023-01-02',
+    }, {
+      id: 2,
+      storage: 'Bank',
+      amount: 2000,
+      currency: 'EUR',
+      type: 'Withdrawal',
+      description: 'Test Description 2',
+      createdAt: '2023-02-01',
+      updatedAt: '2023-02-02',
+    },
   ];
 
   const mockMoneySummary = {
@@ -39,18 +56,14 @@ describe('MoneyBundles', () => {
 
     useMoneySummary.mockReturnValue(mockMoneySummary);
 
-    useCreateMoneyBundle.mockReturnValue({
-      createMoneyBundle: jest.fn(),
-    });
+    useCreateMoneyBundle.mockReturnValue({createMoneyBundle: jest.fn()});
 
     useDeleteMoneyBundle.mockReturnValue({
       deleteMoneyBundle: jest.fn(),
       loading: false,
     });
 
-    useUpdateMoneyBundle.mockReturnValue({
-      updateMoneyBundle: jest.fn(),
-    });
+    useUpdateMoneyBundle.mockReturnValue({updateMoneyBundle: jest.fn()});
   });
 
   it('should render MoneyBundles with the correct data', () => {
@@ -67,7 +80,7 @@ describe('MoneyBundles', () => {
   });
 
   it('should handle the "Create Money Bundle" button click', async () => {
-    const { createMoneyBundle } = useCreateMoneyBundle();
+    const {createMoneyBundle} = useCreateMoneyBundle();
     render(<MoneyBundles />);
 
     fireEvent.click(screen.getByText('Create Money Bundle'));
@@ -76,39 +89,54 @@ describe('MoneyBundles', () => {
     expect(screen.getByText('Create Money Bundle')).toBeInTheDocument();
 
     // Simulate form submission
-    createMoneyBundle({ variables: { amount: 1000, currency: 'USD', storage: 'Cash' } });
-    
+    createMoneyBundle({
+      variables: {
+        amount: 1000,
+        currency: 'USD',
+        storage: 'Cash',
+      },
+    });
+
     await waitFor(() => expect(toaster.positive).toHaveBeenCalledWith('Created new money bundle 1000(USD)!'));
   });
 
   it('should handle the "Delete Money Bundle" button click', async () => {
-    const { deleteMoneyBundle } = useDeleteMoneyBundle();
+    const {deleteMoneyBundle} = useDeleteMoneyBundle();
     render(<MoneyBundles />);
 
     // Simulate opening delete modal for the first money bundle
     fireEvent.click(screen.getAllByText('Delete')[0]);
 
     // Simulate deletion action
-    deleteMoneyBundle({ variables: { id: 1 } });
-    
+    deleteMoneyBundle({variables: {id: 1}});
+
     await waitFor(() => expect(toaster.positive).toHaveBeenCalledWith('Successfully Deleted!'));
   });
 
   it('should handle the "Update Money Bundle" button click', async () => {
-    const { updateMoneyBundle } = useUpdateMoneyBundle();
+    const {updateMoneyBundle} = useUpdateMoneyBundle();
     render(<MoneyBundles />);
 
     // Simulate opening edit modal for the first money bundle
     fireEvent.click(screen.getAllByText('Edit')[0]);
 
     // Simulate update action
-    updateMoneyBundle({ variables: { id: 1, amount: 1500 } });
-    
+    updateMoneyBundle({
+      variables: {
+        id: 1,
+        amount: 1500,
+      },
+    });
+
     await waitFor(() => expect(toaster.positive).toHaveBeenCalledWith('Updated money bundle 1500(USD)!'));
   });
 
   it('should render loading state when money bundles are loading', () => {
-    useMoneyBundles.mockReturnValueOnce({ moneyBundles: [], loading: true, refetch: jest.fn() });
+    useMoneyBundles.mockReturnValueOnce({
+      moneyBundles: [],
+      loading: true,
+      refetch: jest.fn(),
+    });
     render(<MoneyBundles />);
 
     expect(screen.getByText('Loading...')).toBeInTheDocument(); // Assuming "Loading..." text appears when data is loading
@@ -118,7 +146,7 @@ describe('MoneyBundles', () => {
     render(<MoneyBundles />);
 
     fireEvent.click(screen.getByText('Open Feed'));
-    
+
     // Check if FeedModalContainer is displayed
     expect(screen.getByText('Feed Modal')).toBeInTheDocument();
   });
@@ -131,7 +159,11 @@ describe('MoneyBundles', () => {
   });
 
   it('should handle empty money bundle list', () => {
-    useMoneyBundles.mockReturnValueOnce({ moneyBundles: [], loading: false, refetch: jest.fn() });
+    useMoneyBundles.mockReturnValueOnce({
+      moneyBundles: [],
+      loading: false,
+      refetch: jest.fn(),
+    });
     render(<MoneyBundles />);
 
     // Check if a message or empty state is shown when there are no money bundles
@@ -143,7 +175,7 @@ describe('MoneyBundles', () => {
       throw new Error('Create failed');
     });
 
-    useCreateMoneyBundle.mockReturnValue({ createMoneyBundle: mockCreateMoneyBundle });
+    useCreateMoneyBundle.mockReturnValue({createMoneyBundle: mockCreateMoneyBundle});
 
     render(<MoneyBundles />);
 
@@ -157,7 +189,10 @@ describe('MoneyBundles', () => {
       throw new Error('Delete failed');
     });
 
-    useDeleteMoneyBundle.mockReturnValue({ deleteMoneyBundle: mockDeleteMoneyBundle, loading: false });
+    useDeleteMoneyBundle.mockReturnValue({
+      deleteMoneyBundle: mockDeleteMoneyBundle,
+      loading: false,
+    });
 
     render(<MoneyBundles />);
 
@@ -171,7 +206,7 @@ describe('MoneyBundles', () => {
       throw new Error('Update failed');
     });
 
-    useUpdateMoneyBundle.mockReturnValue({ updateMoneyBundle: mockUpdateMoneyBundle });
+    useUpdateMoneyBundle.mockReturnValue({updateMoneyBundle: mockUpdateMoneyBundle});
 
     render(<MoneyBundles />);
 

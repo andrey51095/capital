@@ -1,11 +1,15 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import FeedModal from '../FeedModal'; // Adjust the import based on your file structure
 
 // Mock Button from BaseUI as it is part of the Modal component
 jest.mock('baseui/button', () => ({
-  Button: ({ onClick, isLoading, disabled, children }) => (
-    <button onClick={onClick} disabled={disabled} aria-disabled={isLoading}>
+  Button: ({onClick, isLoading, disabled, children}) => (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      aria-disabled={isLoading}
+    >
       {children}
     </button>
   ),
@@ -107,7 +111,7 @@ describe('FeedModal', () => {
     );
 
     // Simulate closing the modal by clicking on the backdrop or close button
-    fireEvent.click(screen.getByRole('button', { name: /close/i }));
+    fireEvent.click(screen.getByRole('button', {name: /close/i}));
 
     // Verify that the onClose function has been called
     expect(mockOnClose).toHaveBeenCalledTimes(1);

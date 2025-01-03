@@ -9,12 +9,18 @@ const navItems = [
   {
     title: 'Capital',
     itemId: routes.capital,
-  }, {
+  },
+  {
     title: 'Investment Calculator',
     itemId: routes.investmentCalculator,
-  }, {
+  },
+  {
     title: 'Expenses',
     itemId: routes.expenses,
+  },
+  {
+    title: 'Income',
+    itemId: routes.income,
   },
 ];
 

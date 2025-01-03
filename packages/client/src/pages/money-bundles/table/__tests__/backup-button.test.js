@@ -1,17 +1,14 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
+import {render, screen, fireEvent, waitFor} from '@testing-library/react';
+import {MockedProvider} from '@apollo/client/testing';
 import BackupButton from '../BackupButton'; // Adjust import based on file structure
-import { BACKUP_MUTATION } from '../../../gql';
+import {BACKUP_MUTATION} from '../../../gql';
 
 // Mocking the necessary GraphQL Mutation
 const mockBackupMutation = {
-  request: {
-    query: BACKUP_MUTATION,
-  },
+  request: {query: BACKUP_MUTATION},
   result: {
-    data: {
-      backup: JSON.stringify({ key: 'value' }), // Mocked backup data response
+    data: {backup: JSON.stringify({key: 'value'}), // Mocked backup data response
     },
   },
 };
@@ -19,7 +16,10 @@ const mockBackupMutation = {
 describe('BackupButton Component', () => {
   it('opens modal on button click', () => {
     render(
-      <MockedProvider mocks={[mockBackupMutation]} addTypename={false}>
+      <MockedProvider
+        mocks={[mockBackupMutation]}
+        addTypename={false}
+      >
         <BackupButton />
       </MockedProvider>
     );
@@ -34,24 +34,30 @@ describe('BackupButton Component', () => {
 
   it('displays error when backup name is not provided', () => {
     render(
-      <MockedProvider mocks={[mockBackupMutation]} addTypename={false}>
+      <MockedProvider
+        mocks={[mockBackupMutation]}
+        addTypename={false}
+      >
         <BackupButton />
       </MockedProvider>
     );
 
     // Open the modal
     fireEvent.click(screen.getByText('Backup Data'));
-    
+
     // Click the download button without entering a name
     fireEvent.click(screen.getByText('Download'));
-    
+
     // Check that error message appears
     expect(screen.getByText('Please provide a name')).toBeInTheDocument();
   });
 
   it('downloads the backup file when valid name is provided', async () => {
     render(
-      <MockedProvider mocks={[mockBackupMutation]} addTypename={false}>
+      <MockedProvider
+        mocks={[mockBackupMutation]}
+        addTypename={false}
+      >
         <BackupButton />
       </MockedProvider>
     );
@@ -60,9 +66,7 @@ describe('BackupButton Component', () => {
     fireEvent.click(screen.getByText('Backup Data'));
 
     // Provide a valid backup name
-    fireEvent.change(screen.getByLabelText('Please enter a name of the file'), {
-      target: { value: 'test-backup' },
-    });
+    fireEvent.change(screen.getByLabelText('Please enter a name of the file'), {target: {value: 'test-backup'}});
 
     // Click the download button
     fireEvent.click(screen.getByText('Download'));
@@ -76,23 +80,22 @@ describe('BackupButton Component', () => {
 
   it('handles error if backup mutation fails', async () => {
     const errorMock = {
-      request: {
-        query: BACKUP_MUTATION,
-      },
+      request: {query: BACKUP_MUTATION},
       error: new Error('Backup failed'),
     };
 
     render(
-      <MockedProvider mocks={[errorMock]} addTypename={false}>
+      <MockedProvider
+        mocks={[errorMock]}
+        addTypename={false}
+      >
         <BackupButton />
       </MockedProvider>
     );
 
     fireEvent.click(screen.getByText('Backup Data'));
 
-    fireEvent.change(screen.getByLabelText('Please enter a name of the file'), {
-      target: { value: 'test-backup' },
-    });
+    fireEvent.change(screen.getByLabelText('Please enter a name of the file'), {target: {value: 'test-backup'}});
 
     fireEvent.click(screen.getByText('Download'));
 

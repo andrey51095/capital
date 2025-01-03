@@ -7,7 +7,7 @@ const mockProps = {
   type: 'Income',
   description: 'Salary',
   createdAt: new Date(2023, 5, 15), // 15th June 2023
-  updatedAt: new Date(2023, 6, 10),  // 10th July 2023
+  updatedAt: new Date(2023, 6, 10), // 10th July 2023
 };
 
 describe('Body component', () => {

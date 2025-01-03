@@ -1,30 +1,27 @@
 import React from 'react';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import { Formik } from 'formik';
+import {render, fireEvent, waitFor, screen} from '@testing-library/react';
+import {Formik} from 'formik';
 import MoneyBundleForm from '../MoneyBundleForm'; // Adjust the import path as needed
-import { MockedProvider } from '@apollo/client/testing';
-import { QUERY_CURRENCIES } from '../../../gql';
-import { useBundleTypesOptions } from '../../../hooks/graphql';
+import {MockedProvider} from '@apollo/client/testing';
+import {QUERY_CURRENCIES} from '../../../gql';
+import {useBundleTypesOptions} from '../../../hooks/graphql';
 
 // Mock hooks and queries
-jest.mock('../../../hooks/graphql', () => ({
-  useBundleTypesOptions: jest.fn(),
-}));
+jest.mock('../../../hooks/graphql', () => ({useBundleTypesOptions: jest.fn()}));
 
 const mockCurrencies = {
-  request: {
-    query: QUERY_CURRENCIES,
-  },
-  result: {
-    data: {
-      currencies: ['USD', 'EUR', 'GBP'],
-    },
-  },
+  request: {query: QUERY_CURRENCIES},
+  result: {data: {currencies: ['USD', 'EUR', 'GBP']}},
 };
 
 const mockTypesOptions = [
-  { id: 'type1', label: 'Type 1' },
-  { id: 'type2', label: 'Type 2' },
+  {
+    id: 'type1',
+    label: 'Type 1',
+  }, {
+    id: 'type2',
+    label: 'Type 2',
+  },
 ];
 
 describe('MoneyBundleForm', () => {
@@ -37,7 +34,10 @@ describe('MoneyBundleForm', () => {
 
   it('renders form and handles input changes correctly', async () => {
     render(
-      <MockedProvider mocks={[mockCurrencies]} addTypename={false}>
+      <MockedProvider
+        mocks={[mockCurrencies]}
+        addTypename={false}
+      >
         <Formik
           initialValues={{
             amount: '',
@@ -64,11 +64,11 @@ describe('MoneyBundleForm', () => {
     expect(screen.getByLabelText('Description')).toHaveValue('');
 
     // Simulate user entering a value
-    fireEvent.change(screen.getByLabelText('Amount *'), { target: { value: '1000' } });
-    fireEvent.change(screen.getByLabelText('Currency *'), { target: { value: 'USD' } });
-    fireEvent.change(screen.getByLabelText('Type *'), { target: { value: 'type1' } });
-    fireEvent.change(screen.getByLabelText('Storage *'), { target: { value: 'Storage 1' } });
-    fireEvent.change(screen.getByLabelText('Description'), { target: { value: 'Test Description' } });
+    fireEvent.change(screen.getByLabelText('Amount *'), {target: {value: '1000'}});
+    fireEvent.change(screen.getByLabelText('Currency *'), {target: {value: 'USD'}});
+    fireEvent.change(screen.getByLabelText('Type *'), {target: {value: 'type1'}});
+    fireEvent.change(screen.getByLabelText('Storage *'), {target: {value: 'Storage 1'}});
+    fireEvent.change(screen.getByLabelText('Description'), {target: {value: 'Test Description'}});
 
     // Assert changes
     expect(screen.getByLabelText('Amount *')).toHaveValue('1000');
@@ -80,7 +80,10 @@ describe('MoneyBundleForm', () => {
 
   it('shows validation errors if fields are touched and not filled', async () => {
     render(
-      <MockedProvider mocks={[mockCurrencies]} addTypename={false}>
+      <MockedProvider
+        mocks={[mockCurrencies]}
+        addTypename={false}
+      >
         <Formik
           initialValues={{
             amount: '',
@@ -122,7 +125,10 @@ describe('MoneyBundleForm', () => {
     const handleSubmit = jest.fn();
 
     render(
-      <MockedProvider mocks={[mockCurrencies]} addTypename={false}>
+      <MockedProvider
+        mocks={[mockCurrencies]}
+        addTypename={false}
+      >
         <Formik
           initialValues={{
             amount: '1000',
@@ -155,7 +161,10 @@ describe('MoneyBundleForm', () => {
     });
 
     render(
-      <MockedProvider mocks={[mockCurrencies]} addTypename={false}>
+      <MockedProvider
+        mocks={[mockCurrencies]}
+        addTypename={false}
+      >
         <Formik
           initialValues={{
             amount: '',

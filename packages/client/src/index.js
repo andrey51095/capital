@@ -16,7 +16,7 @@ import * as serviceWorker from './serviceWorker';
 const cache = new InMemoryCache();
 const client = new ApolloClient({
   cache: cache,
-  uri: `http://127.0.0.1:${process.env.APP_SERVER_PORT || 8000}`,
+  uri: `${process.env.REACT_APP_MACHINE_IP || 'http://172.16.11.62'}:${process.env.APP_SERVER_PORT || 8000}`,
 });
 
 const engine = new Styletron();

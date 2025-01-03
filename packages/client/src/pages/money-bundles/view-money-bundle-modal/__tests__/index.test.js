@@ -51,7 +51,10 @@ describe('ViewMoneyBundleModal', () => {
   });
 
   it('should not render modal when isOpen is false', () => {
-    const props = { ...mockProps, isOpen: false };
+    const props = {
+      ...mockProps,
+      isOpen: false,
+    };
     render(<ViewMoneyBundleModal {...props} />);
 
     // Modal should not be visible
